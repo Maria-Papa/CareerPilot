@@ -1,0 +1,40 @@
+# -------------------------------------------------------------------
+# GLOBAL OS FILES
+# -------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------------------------------------------
+# EDITOR / TOOLING
+# -------------------------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# VS Code devcontainer
+.devcontainer/.cache/
+.devcontainer/*cache*
+.devcontainer/Dockerfile-backup*
+
+# -------------------------------------------------------------------
+# DOCKER / COMPOSE
+# -------------------------------------------------------------------
+docker-data/
+docker-volume*/
+tmp/
+*.pid
+
+# -------------------------------------------------------------------
+# PROJECT-SPECIFIC
+# -------------------------------------------------------------------
+project-tree.txt
+manifest*.txt
+Progress.md
+
+# Ignore any local environment overrides
+.env
+.env.*
+
+# Node / PNPM cache at root
+.pnpm-store/

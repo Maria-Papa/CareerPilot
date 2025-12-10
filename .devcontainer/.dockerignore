@@ -1,0 +1,28 @@
+# Node
+node_modules
+pnpm-store
+frontend/node_modules
+frontend/.pnp
+frontend/dist
+frontend/build
+
+# Python
+backend/.venv
+**/__pycache__/
+**/*.pyc
+
+# OS / Editor
+.vscode
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile*
+docker-compose*.yml

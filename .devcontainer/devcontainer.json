@@ -1,0 +1,59 @@
+{
+  "name": "CareerPilot Dev Container",
+  "workspaceFolder": "/workspace",
+  "remoteUser": "vscode",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": true
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "22"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2.13.0": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "prettier.prettier-vscode",
+        "ms-vscode.vscode-typescript-next",
+        "ms-playwright.playwright",
+        "ms-azuretools.vscode-docker",
+        "yzhang.markdown-all-in-one",
+        "dbaeumer.vscode-eslint"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspace/backend/.venv/bin/python",
+        "python.analysis.typeCheckingMode": "standard",
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": { "source.organizeImports": "always" },
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "editor.tabSize": 2,
+        "editor.detectIndentation": false,
+        "prettier.singleQuote": true,
+        "prettier.semi": true,
+        "prettier.trailingComma": "es5",
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "eslint.enable": true,
+        "eslint.validate": [
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact"
+        ]
+      }
+    }
+  },
+  "postCreateCommand": "python -m venv /workspace/backend/.venv && source /workspace/backend/.venv/bin/activate && pip install --upgrade pip setuptools wheel && pip install -r backend/requirements.txt || true && cd frontend && pnpm install || true && npm install -g playwright && npx playwright install-deps"
+}
