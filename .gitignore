@@ -29,6 +29,8 @@ tmp/
 # PROJECT-SPECIFIC
 # -------------------------------------------------------------------
 project-tree.txt
+project-contents.txt
+/manifests
 manifest*.txt
 Progress.md
 

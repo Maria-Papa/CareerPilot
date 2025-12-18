@@ -4,8 +4,8 @@ from app.services.job_service import (
     create_job,
     get_jobs,
     get_job,
-    update_job_service,
-    delete_job_service,
+    update_job,
+    delete_job,
 )
 from app import schemas
 from app.database import get_db
@@ -35,7 +35,7 @@ def get_job_route(job_id: int, db: Session = Depends(get_db)):
 def update_job_route(
     job_id: int, job_update: schemas.JobUpdate, db: Session = Depends(get_db)
 ):
-    updated = update_job_service(db, job_id, job_update.dict(exclude_unset=True))
+    updated = update_job(db, job_id, job_update.dict(exclude_unset=True))
     if not updated:
         raise HTTPException(status_code=404, detail="Job not found")
     return updated
@@ -43,7 +43,7 @@ def update_job_route(
 
 @router.delete("/{job_id}")
 def delete_job_route(job_id: int, db: Session = Depends(get_db)):
-    success = delete_job_service(db, job_id)
+    success = delete_job(db, job_id)
     if not success:
         raise HTTPException(status_code=404, detail="Job not found")
     return {"detail": "Job deleted"}
