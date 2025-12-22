@@ -1,9 +1,13 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import Boolean, DateTime, String
-from app.models import Base, File, Job
+from app.models import Base
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+
+if TYPE_CHECKING:
+    from app.models import Job, File
 
 
 class User(Base):

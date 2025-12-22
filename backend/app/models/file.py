@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import (
     Index,
@@ -10,7 +11,10 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import FileType
-from app.models import Base, User
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import User
 
 
 class File(Base):
@@ -28,4 +32,4 @@ class File(Base):
         DateTime(timezone=True), server_default=func.now()
     )
 
-    user: Mapped[User] = relationship(back_populates="files")
+    user: Mapped["User"] = relationship(back_populates="files")

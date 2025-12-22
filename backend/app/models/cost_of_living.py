@@ -1,9 +1,13 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import Index, String, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from app.models import Base, Location
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import Location
 
 
 class CostOfLiving(Base):
@@ -25,4 +29,4 @@ class CostOfLiving(Base):
     )
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    location: Mapped[Location] = relationship()
+    location: Mapped["Location"] = relationship()

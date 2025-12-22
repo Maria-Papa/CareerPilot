@@ -1,10 +1,14 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import ForeignKey, DateTime, Index, SmallInteger
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import InterviewOutcome, InterviewType
-from app.models import Base, Job
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import Job
 
 
 class Interview(Base):
@@ -26,4 +30,4 @@ class Interview(Base):
         DateTime(timezone=True), server_default=func.now()
     )
 
-    job: Mapped[Job] = relationship(back_populates="interviews")
+    job: Mapped["Job"] = relationship(back_populates="interviews")

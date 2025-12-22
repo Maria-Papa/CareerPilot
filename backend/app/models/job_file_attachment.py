@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import (
     Boolean,
@@ -10,7 +11,10 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from app.models import Base, File, Job
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import Job, File
 
 
 class JobFileAttachment(Base):
@@ -32,8 +36,8 @@ class JobFileAttachment(Base):
     )
     detached_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    job: Mapped[Job] = relationship(back_populates="attachments")
-    file: Mapped[File] = relationship()
+    job: Mapped["Job"] = relationship(back_populates="attachments")
+    file: Mapped["File"] = relationship()
 
     __table_args__ = (
         UniqueConstraint("job_id", "file_id", "version", name="uq_job_file_version"),

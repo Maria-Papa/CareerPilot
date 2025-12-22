@@ -1,19 +1,22 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import Index, String, Integer, ForeignKey, DateTime, SmallInteger, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import EmploymentType, FlexibilityType, JobStatus
-from app.models import (
-    Base,
-    Company,
-    Location,
-    User,
-    Interview,
-    JobEvent,
-    JobFileAttachment,
-    JobStatusHistory,
-)
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import (
+        Company,
+        Location,
+        User,
+        Interview,
+        JobEvent,
+        JobFileAttachment,
+        JobStatusHistory,
+    )
 
 
 class Job(Base):
@@ -52,9 +55,9 @@ class Job(Base):
     )
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
-    user: Mapped[User] = relationship(back_populates="jobs")
-    company: Mapped[Company] = relationship(back_populates="jobs")
-    location: Mapped[Location | None] = relationship()
+    user: Mapped["User"] = relationship(back_populates="jobs")
+    company: Mapped["Company"] = relationship(back_populates="jobs")
+    location: Mapped["Location | None"] = relationship()
 
     status_history: Mapped[list["JobStatusHistory"]] = relationship(
         back_populates="job", cascade="all, delete-orphan"

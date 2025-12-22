@@ -1,7 +1,11 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models import Base, Currency
+from app.models import Base
+
+if TYPE_CHECKING:
+    from app.models import Currency
 
 
 class Location(Base):
@@ -12,4 +16,4 @@ class Location(Base):
     country_code: Mapped[str] = mapped_column(String(2), index=True)
     currency_id: Mapped[int] = mapped_column(ForeignKey("currencies.id"))
 
-    currency: Mapped[Currency] = relationship()
+    currency: Mapped["Currency"] = relationship()
