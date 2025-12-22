@@ -1,0 +1,56 @@
+APP_STYLE_MANIFEST:
+  name: "CareerPilot - Code, Formatting & Writing Rules"
+
+  git_commit_style:
+    convention: "Conventional Commits"
+    format: "<type>(<scope>): short imperative summary"
+    subject_rules:
+      tense: "present"
+      max_length: 72
+      punctuation: "no period at end"
+      casing: "lowercase"
+
+    allowed_types:
+      feat: "New feature or capability"
+      fix: "Bug fix"
+      refactor: "Code change without behavior change"
+      docs: "Documentation only"
+      test: "Adding or updating tests"
+      chore: "Tooling, config, or maintenance"
+
+    recommended_scopes:
+      architecture:
+        - backend
+        - frontend
+        - api
+        - infra
+        - style
+      domain:
+        - jobs
+        - interviews
+        - files
+        - auth
+        - users
+        - companies
+      persistence:
+        - models
+        - enums
+        - db
+        - migrations
+
+    scope_rules:
+      - "Scopes must be lowercase"
+      - "Use singular nouns"
+      - "Multiple scopes allowed: feat(models, enums)"
+      - "Avoid generic scopes unless necessary"
+
+    body_rules:
+      sections:
+        - Context
+        - Changes
+        - Notes
+      bullet_style: "-"
+      tone: "clear, concise, professional"
+      intent: "Explain why, not implementation details"
+
+END_STYLE_MANIFEST

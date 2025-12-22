@@ -1,0 +1,12 @@
+<type>(<scope>): short imperative summary (max 72 chars)
+
+Context:
+- Why this change was needed
+- What problem it solves
+
+Changes:
+- Key structural or behavioral changes
+- Avoid low-level implementation details
+
+Notes:
+- Follow-ups, migrations, or breaking considerations
