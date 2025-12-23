@@ -1,8 +1,8 @@
-from enum import IntEnum, unique
+from enum import StrEnum, unique
 
 
 @unique
-class FlexibilityType(IntEnum):
-    ON_SITE = 1
-    HYBRID = 2
-    REMOTE = 3
+class FlexibilityType(StrEnum):
+    ON_SITE = "ON_SITE"
+    HYBRID = "HYBRID"
+    REMOTE = "REMOTE"

@@ -1,7 +1,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
-from sqlalchemy import Index, String, Integer, ForeignKey, DateTime, SmallInteger, Text
+from sqlalchemy import (
+    Enum,
+    Index,
+    String,
+    Integer,
+    ForeignKey,
+    DateTime,
+    Text,
+)
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import EmploymentType, FlexibilityType, JobStatus
@@ -34,8 +42,14 @@ class Job(Base):
     location_id: Mapped[int | None] = mapped_column(ForeignKey("locations.id"))
 
     title: Mapped[str] = mapped_column(String(255))
-    employment_type: Mapped[EmploymentType | None] = mapped_column(SmallInteger)
-    flexibility: Mapped[FlexibilityType | None] = mapped_column(SmallInteger)
+    employment_type: Mapped[EmploymentType | None] = mapped_column(
+        Enum(EmploymentType, name="employment_type_enum"),
+        nullable=True,
+    )
+    flexibility: Mapped[FlexibilityType | None] = mapped_column(
+        Enum(FlexibilityType, name="flexibility_type_enum"),
+        nullable=True,
+    )
 
     description_html: Mapped[str | None] = mapped_column(Text)
     description_text: Mapped[str | None] = mapped_column(Text)
@@ -45,7 +59,10 @@ class Job(Base):
     salary_gross_calculated: Mapped[int | None] = mapped_column(Integer)
     salary_net: Mapped[int | None] = mapped_column(Integer)
 
-    current_status: Mapped[JobStatus] = mapped_column(SmallInteger)
+    current_status: Mapped[JobStatus] = mapped_column(
+        Enum(JobStatus, name="job_status_enum"),
+        nullable=False,
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()

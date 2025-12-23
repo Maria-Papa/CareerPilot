@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
-from sqlalchemy import ForeignKey, DateTime, JSON, Index, SmallInteger
+from sqlalchemy import Enum, ForeignKey, DateTime, JSON, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import JobEventType
@@ -22,7 +22,10 @@ class JobEvent(Base):
     job_id: Mapped[int] = mapped_column(
         ForeignKey("jobs.id", ondelete="CASCADE"), index=True
     )
-    event_type: Mapped[JobEventType] = mapped_column(SmallInteger)
+    event_type: Mapped[JobEventType] = mapped_column(
+        Enum(JobEventType, name="job_event_type_enum"),
+        nullable=False,
+    )
     payload: Mapped[dict | None] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()

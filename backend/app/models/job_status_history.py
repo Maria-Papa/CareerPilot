@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
-from sqlalchemy import ForeignKey, DateTime, Index, SmallInteger
+from sqlalchemy import Enum, ForeignKey, DateTime, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import JobStatus
@@ -21,7 +21,10 @@ class JobStatusHistory(Base):
     job_id: Mapped[int] = mapped_column(
         ForeignKey("jobs.id", ondelete="CASCADE"), index=True
     )
-    status: Mapped[JobStatus] = mapped_column(SmallInteger)
+    status: Mapped[JobStatus] = mapped_column(
+        Enum(JobStatus, name="job_status_enum"),
+        nullable=False,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

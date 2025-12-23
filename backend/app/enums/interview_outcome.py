@@ -1,10 +1,11 @@
-from enum import IntEnum, unique
+from enum import StrEnum, unique
 
 
 @unique
-class InterviewOutcome(IntEnum):
-    PENDING = 0
-    PASSED = 1
-    FAILED = 2
-    OFFERED = 3
-    CANCELED = 4
+class InterviewOutcome(StrEnum):
+    PENDING = "PENDING"
+    PASSED = "PASSED"
+    FAILED = "FAILED"
+    OFFERED = "OFFERED"
+    CANCELED = "CANCELED"
+    NO_SHOW = "NO_SHOW"

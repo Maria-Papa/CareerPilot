@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
-from sqlalchemy import ForeignKey, DateTime, Index, SmallInteger
+from sqlalchemy import Enum, ForeignKey, DateTime, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import InterviewOutcome, InterviewType
@@ -22,9 +22,15 @@ class Interview(Base):
     job_id: Mapped[int] = mapped_column(
         ForeignKey("jobs.id", ondelete="CASCADE"), index=True
     )
-    interview_type: Mapped[InterviewType] = mapped_column(SmallInteger)
+    interview_type: Mapped[InterviewType] = mapped_column(
+        Enum(InterviewType, name="interview_type_enum"),
+        nullable=False,
+    )
     scheduled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    outcome: Mapped[InterviewOutcome | None] = mapped_column(SmallInteger)
+    outcome: Mapped[InterviewOutcome | None] = mapped_column(
+        Enum(InterviewOutcome, name="interview_outcome_enum"),
+        nullable=True,
+    )
     notes: Mapped[str | None] = mapped_column()
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()

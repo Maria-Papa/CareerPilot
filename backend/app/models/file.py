@@ -2,11 +2,11 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import (
+    Enum,
     Index,
     String,
     ForeignKey,
     DateTime,
-    SmallInteger,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
@@ -27,7 +27,10 @@ class File(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     file_url: Mapped[str] = mapped_column(String(512))
-    file_type: Mapped[FileType] = mapped_column(SmallInteger)
+    file_type: Mapped[FileType] = mapped_column(
+        Enum(FileType, name="file_type_enum"),
+        nullable=False,
+    )
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now()
     )

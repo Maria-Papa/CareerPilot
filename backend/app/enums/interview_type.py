@@ -1,14 +1,15 @@
-from enum import IntEnum, unique
+from enum import StrEnum, unique
 
 
 @unique
-class InterviewType(IntEnum):
-    HR_SCREEN = 1
-    PHONE_SCREEN = 2
-    TECHNICAL = 3
-    SYSTEM_DESIGN = 4
-    TAKE_HOME = 5
-    PAIR_PROGRAMMING = 6
-    MANAGER = 7
-    FINAL = 8
-    OFFER_DISCUSSION = 9
+class InterviewType(StrEnum):
+    HR_SCREEN = "HR_SCREEN"
+    PHONE_SCREEN = "PHONE_SCREEN"
+    TECHNICAL = "TECHNICAL"
+    SYSTEM_DESIGN = "SYSTEM_DESIGN"
+    TAKE_HOME = "TAKE_HOME"
+    PAIR_PROGRAMMING = "PAIR_PROGRAMMING"
+    MANAGER = "MANAGER"
+    FINAL = "FINAL"
+    OFFER_DISCUSSION = "OFFER_DISCUSSION"
+    OTHER = "OTHER"

@@ -1,11 +1,12 @@
-from enum import IntEnum, unique
+from enum import StrEnum, unique
 
 
 @unique
-class JobStatus(IntEnum):
-    SAVED = 1
-    APPLIED = 2
-    INTERVIEW = 3
-    REJECTED = 4
-    DECLINED = 5
-    OFFER = 6
+class JobStatus(StrEnum):
+    DRAFT = "DRAFT"
+    SAVED = "SAVED"
+    APPLIED = "APPLIED"
+    INTERVIEW = "INTERVIEW"
+    REJECTED = "REJECTED"
+    WITHDRAWN = "WITHDRAWN"
+    OFFER = "OFFER"

@@ -1,10 +1,11 @@
-from enum import IntEnum, unique
+from enum import StrEnum, unique
 
 
 @unique
-class FileType(IntEnum):
-    CV = 1
-    COVER_LETTER = 2
-    PORTFOLIO = 3
-    ASSIGNMENT = 4
-    OTHER = 99
+class FileType(StrEnum):
+    CV = "CV"
+    COVER_LETTER = "COVER_LETTER"
+    PORTFOLIO = "PORTFOLIO"
+    ASSIGNMENT = "ASSIGNMENT"
+    REFERENCES = "REFERENCES"
+    OTHER = "OTHER"
