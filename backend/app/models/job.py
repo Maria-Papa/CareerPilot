@@ -1,17 +1,14 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from datetime import datetime
 from sqlalchemy import (
     Enum,
     Index,
     String,
     Integer,
     ForeignKey,
-    DateTime,
     Text,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.sql import func
 from app.enums import EmploymentType, FlexibilityType, JobStatus
 from app.models import Base
 
@@ -24,10 +21,12 @@ if TYPE_CHECKING:
         JobEvent,
         JobFileAttachment,
         JobStatusHistory,
+        TimestampMixin,
+        SoftDeleteMixin,
     )
 
 
-class Job(Base):
+class Job(Base, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "jobs"
     __table_args__ = (
         Index("idx_jobs_user_status", "user_id", "current_status"),
@@ -43,11 +42,21 @@ class Job(Base):
 
     title: Mapped[str] = mapped_column(String(255))
     employment_type: Mapped[EmploymentType | None] = mapped_column(
-        Enum(EmploymentType, name="employment_type_enum"),
+        Enum(
+            EmploymentType,
+            name="employment_type_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=True,
     )
     flexibility: Mapped[FlexibilityType | None] = mapped_column(
-        Enum(FlexibilityType, name="flexibility_type_enum"),
+        Enum(
+            FlexibilityType,
+            name="flexibility_type_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=True,
     )
 
@@ -60,17 +69,14 @@ class Job(Base):
     salary_net: Mapped[int | None] = mapped_column(Integer)
 
     current_status: Mapped[JobStatus] = mapped_column(
-        Enum(JobStatus, name="job_status_enum"),
+        Enum(
+            JobStatus,
+            name="job_status_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=False,
     )
-
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
-    )
-    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     user: Mapped["User"] = relationship(back_populates="jobs")
     company: Mapped["Company"] = relationship(back_populates="jobs")

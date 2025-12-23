@@ -1,23 +1,20 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from datetime import datetime
 from sqlalchemy import (
     Enum,
     Index,
     String,
     ForeignKey,
-    DateTime,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.sql import func
 from app.enums import FileType
-from app.models import Base
+from app.models import Base, TimestampMixin, SoftDeleteMixin
 
 if TYPE_CHECKING:
     from app.models import User
 
 
-class File(Base):
+class File(Base, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "files"
     __table_args__ = (
         Index("idx_files_user_id", "user_id"),
@@ -28,11 +25,13 @@ class File(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     file_url: Mapped[str] = mapped_column(String(512))
     file_type: Mapped[FileType] = mapped_column(
-        Enum(FileType, name="file_type_enum"),
+        Enum(
+            FileType,
+            name="file_type_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=False,
-    )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
     )
 
     user: Mapped["User"] = relationship(back_populates="files")

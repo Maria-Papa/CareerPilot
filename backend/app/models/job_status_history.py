@@ -1,17 +1,15 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
-from datetime import datetime
-from sqlalchemy import Enum, ForeignKey, DateTime, Index
+from sqlalchemy import Enum, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.sql import func
 from app.enums import JobStatus
-from app.models import Base
+from app.models import Base, TimestampMixin
 
 if TYPE_CHECKING:
     from app.models import Job
 
 
-class JobStatusHistory(Base):
+class JobStatusHistory(Base, TimestampMixin):
     __tablename__ = "job_status_history"
     __table_args__ = (
         Index("idx_job_status_history_job_id_created_at", "job_id", "created_at"),
@@ -22,11 +20,13 @@ class JobStatusHistory(Base):
         ForeignKey("jobs.id", ondelete="CASCADE"), index=True
     )
     status: Mapped[JobStatus] = mapped_column(
-        Enum(JobStatus, name="job_status_enum"),
+        Enum(
+            JobStatus,
+            name="job_status_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=False,
-    )
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
     )
 
     job: Mapped["Job"] = relationship(back_populates="status_history")

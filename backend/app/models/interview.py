@@ -5,13 +5,13 @@ from sqlalchemy import Enum, ForeignKey, DateTime, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 from app.enums import InterviewOutcome, InterviewType
-from app.models import Base
+from app.models import Base, TimestampMixin
 
 if TYPE_CHECKING:
     from app.models import Job
 
 
-class Interview(Base):
+class Interview(Base, TimestampMixin):
     __tablename__ = "interviews"
     __table_args__ = (
         Index("idx_interviews_job_id_scheduled_at", "job_id", "scheduled_at"),
@@ -23,17 +23,24 @@ class Interview(Base):
         ForeignKey("jobs.id", ondelete="CASCADE"), index=True
     )
     interview_type: Mapped[InterviewType] = mapped_column(
-        Enum(InterviewType, name="interview_type_enum"),
+        Enum(
+            InterviewType,
+            name="interview_type_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=False,
     )
     scheduled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     outcome: Mapped[InterviewOutcome | None] = mapped_column(
-        Enum(InterviewOutcome, name="interview_outcome_enum"),
+        Enum(
+            InterviewOutcome,
+            name="interview_outcome_enum",
+            native_enum=False,
+            validate_strings=True,
+        ),
         nullable=True,
     )
     notes: Mapped[str | None] = mapped_column()
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
 
     job: Mapped["Job"] = relationship(back_populates="interviews")

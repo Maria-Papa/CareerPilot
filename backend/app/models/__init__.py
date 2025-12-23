@@ -10,6 +10,7 @@ from .job_status_history import JobStatusHistory
 from .job_tag import JobTag
 from .job import Job
 from .location import Location
+from .mixins import TimestampMixin, SoftDeleteMixin
 from .tag import Tag
 from .user import User
 
@@ -26,6 +27,8 @@ __all__ = [
     "JobTag",
     "Job",
     "Location",
+    "TimestampMixin",
+    "SoftDeleteMixin",
     "Tag",
     "User",
 ]
