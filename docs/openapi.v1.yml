@@ -1,0 +1,210 @@
+openapi: 3.1.0
+
+info:
+  title: CareerPilot Public API
+  description: |
+    Public REST API for CareerPilot – a personal ATS and job application tracking system.
+
+    - User-scoped
+    - Versioned
+    - JWT-authenticated
+    - Designed for local-first use with future SaaS expansion
+  version: '1.0.0'
+
+servers:
+  - url: /api/v1
+    description: API v1
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        is_verified:
+          type: boolean
+
+    Company:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        website:
+          type: string
+          nullable: true
+        industry:
+          type: string
+          nullable: true
+
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        employment_type:
+          type: string
+          enum: [FULL_TIME, PART_TIME, CONTRACT, FREELANCE, INTERN]
+        flexibility:
+          type: string
+          enum: [ON_SITE, HYBRID, REMOTE]
+        job_url:
+          type: string
+          nullable: true
+        salary_gross_given:
+          type: integer
+          nullable: true
+        current_status:
+          type: string
+          enum: [SAVED, APPLIED, INTERVIEW, OFFER, REJECTED]
+
+    Interview:
+      type: object
+      properties:
+        id:
+          type: integer
+        interview_type:
+          type: string
+          enum:
+            - HR_SCREEN
+            - TECHNICAL
+            - SYSTEM_DESIGN
+            - TAKE_HOME
+            - PAIR_PROGRAMMING
+            - MANAGER
+            - FINAL
+            - OFFER_DISCUSSION
+        scheduled_at:
+          type: string
+          format: date-time
+        outcome:
+          type: string
+          enum: [PENDING, PASSED, FAILED, OFFERED]
+          nullable: true
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  /auth/login:
+    post:
+      summary: Login and receive JWT tokens
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Authenticated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+
+  /jobs:
+    get:
+      summary: List jobs for the authenticated user
+      tags: [Jobs]
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+        - in: query
+          name: company_id
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Job list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+
+    post:
+      summary: Create a job application
+      tags: [Jobs]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+      responses:
+        '201':
+          description: Job created
+
+  /jobs/{job_id}/interviews:
+    post:
+      summary: Schedule an interview
+      tags: [Interviews]
+      parameters:
+        - in: path
+          name: job_id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Interview'
+      responses:
+        '201':
+          description: Interview scheduled
