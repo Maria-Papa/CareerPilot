@@ -60,7 +60,7 @@ Client (Web / CLI / Future Integrations)
 - **Domain-oriented:** Business concepts (jobs, companies, timelines) shape the codebase
 - **User-scoped by design:** All data access is explicitly tied to a user
 - **Framework-light core:** Business logic is not coupled to FastAPI internals
-- **Async-first:** Built on FastAPI and SQLAlchemy 2.0 async APIs
+- **Synchronous persistence:** SQLAlchemy sync sessions for clarity and SQLite compatibility (see: [ADR-004: Synchronous Persistence with SQLAlchemy](adr/ADR-004-sync-vs-async-persistence.md))
 
 ### Why a Modular Monolith
 
@@ -70,7 +70,7 @@ Instead, it uses:
 
 - Internal modularization
 - Explicit service boundaries
-- Clean separation of concerns
+- Clear repository abstractions
 
 This approach provides:
 
@@ -90,10 +90,13 @@ This decision is documented in [ADR-001: Modular Monolith Architecture](adr/ADR-
    - Enforces user ownership
    - Applies business rules
    - Coordinates repositories
+   - Raises domain errors (see: [ADR-006: Domain Errors and Exception Mapping](adr/ADR-006-domain-errors.md))
 5. Repository performs database operations
 6. Domain models are returned
 7. Service prepares the response
-8. Route returns a schema-defined response
+8. Route:
+   - Returns a schema-defined response
+   - Maps domain errors to HTTP responses
 
 This flow ensures strict separation between HTTP, business logic, and persistence.
 
@@ -101,12 +104,14 @@ This flow ensures strict separation between HTTP, business logic, and persistenc
 
 ```text
 app/
-├── routes/        # HTTP layer only
-├── services/      # Business rules
-├── repositories/  # Database access only
-├── models/        # SQLAlchemy ORM models
-├── schemas/       # Pydantic input/output models
-├── enums/         # Domain enums
+├── api/
+│   └── v1/           # HTTP routes
+├── services/         # Business rules
+├── repositories/     # Database access only
+├── models/           # SQLAlchemy ORM models
+├── schemas/          # Pydantic I/O schemas
+├── enums/            # Domain enums
+├── core/             # DB, config, security
 ```
 
 ### Key Rules
@@ -115,6 +120,8 @@ app/
 - Services enforce user scoping and domain rules
 - Repositories contain no bussiness logic
 - Models represent persistence only
+- Schemas are the public contract
+- All database access is mediated through repositories (see: [ADR-005: Repository Pattern and Data Access Boundaries](adr/ADR-005-repository-pattern.md))
 
 ## 5. Data Modeling Principles
 
@@ -154,6 +161,7 @@ API evolution rules are defined in [API Evolution & Deprecation Rules](api_evolu
 - PostgreSQL-compatible schema
 - Alembic-ready models
 - Enum strategy compatible with PostgreSQL ENUMs if needed
+- Schemas are the public contract
 
 ## 9. Non-Goals (By Design)
 
@@ -180,3 +188,12 @@ This architecture demonstrates:
 - Well-defined domain boundaries
 - Clear reasoning supported by documentation
 - Explicit principles guiding future refactoring and growth
+
+## 12. Related Architectural Decisions
+
+- [ADR-001: Modular Monolith Architecture](adr/ADR-001-architecture.md)
+- [ADR-002: Enum Strategy and Database Representation](adr/ADR-002-enum-strategy.md)
+- [ADR-003: Timeline-Based Modeling vs Mutable State](adr/ADR-003-timeline-modeling.md)
+- [ADR-004: Synchronous Persistence with SQLAlchemy](adr/ADR-004-sync-vs-async-persistence.md)
+- [ADR-005: Repository Pattern and Data Access Boundaries](adr/ADR-005-repository-pattern.md)
+- [ADR-006: Domain Errors and Exception Mapping](adr/ADR-006-domain-errors.md)

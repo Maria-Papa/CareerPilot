@@ -25,6 +25,7 @@ APP_STYLE_MANIFEST:
         - api
         - infra
         - style
+        - adr
       domain:
         - jobs
         - interviews
@@ -43,6 +44,7 @@ APP_STYLE_MANIFEST:
       - "Use singular nouns"
       - "Multiple scopes allowed: feat(models, enums)"
       - "Avoid generic scopes unless necessary"
+      - "ADR commits should reference ADR number in scope, e.g., docs(adr-005): clarify repository responsibilities"
 
     body_rules:
       sections:

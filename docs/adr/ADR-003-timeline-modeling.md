@@ -15,8 +15,7 @@ Job applications in CareerPilot evolve through multiple states (saved → applie
 
 ## Scope
 
-This decision documents the choice to model job-related state and history
-using timeline-based, append-only records rather than mutable state.
+This decision documents the choice to model job-related state and history using timeline-based, append-only records rather than mutable state.
 
 It aligns with the architectural principles outlined in:
 
@@ -50,5 +49,4 @@ This ADR directly affects:
 - [`ADR-001-architecture.md`](ADR-001-architecture.md)
 - [`ADR-002-enum-strategy.md`](ADR-002-enum-strategy.md)
 
-Timeline-based modeling provides a stable foundation for future features
-such as analytics, insights, and historical reconstruction.
+Timeline-based modeling provides a stable foundation for future features such as analytics, insights, and historical reconstruction.

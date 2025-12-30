@@ -5,14 +5,21 @@ It serves as the authoritative reference for frontend integration, future API co
 
 The contract is **versioned, user-scoped, REST-based**, and designed to remain stable as the application evolves from a local-first tool to a potential SaaS.
 
+ADR references:
+
+- Timeline-based modeling: [ADR-003](adr/ADR-003-timeline-modeling.md)
+- Enum strategy: [ADR-002](adr/ADR-002-enum-strategy.md)
+- Repository pattern: [ADR-005](adr/ADR-005-repository-pattern.md)
+- Domain error mapping: [ADR-006](adr/ADR-006-domain-errors.md)
+
 ## 1. General Principles
 
 - Base URL: `/api/v1`
 - API style: REST (resource-oriented, pragmatic)
 - Authentication: OAuth2 Password Flow with JWT
 - All endpoints are **user-scoped** unless explicitly stated
-- Soft deletes are respected across all queries
-- Breaking changes require a new API version
+- Soft deletes are respected across all queries (see: [ADR-005](adr/ADR-005-repository-pattern.md))
+- Breaking changes require a new API version (see: [Api Evolution](api_evolution.md))
 
 ## 2. Authentication
 
@@ -144,7 +151,7 @@ List jobs for the authenticated user.
 
 **Query Parameters:**
 
-- `status`
+- `status` (see: [ADR-002](adr/ADR-002-enum-strategy.md))
 - `company_id`
 - `tag`
 - `limit`, `offset`
@@ -166,6 +173,8 @@ Create a job application.
   "salary_gross_given": 8500000
 }
 ```
+
+> Applies timeline-based modeling (see: [ADR-003](adr/ADR-003-timeline-modeling.md)) for auditability.
 
 ### GET `/jobs/{job_id}`
 
@@ -204,12 +213,13 @@ Change job status.
 
 **Side Effects:**
 
-- Inserts a JobStatusHistory record
-- Inserts a JobEvent
+- Inserts a `JobStatusHistory` record (see: [ADR-003](adr/ADR-003-timeline-modeling.md))
+- Inserts a `JobEvent`
+- Soft-delete rules handled by repository (see: [ADR-005](adr/ADR-005-repository-pattern.md))
 
 ### GET `/jobs/{job_id}/status-history`
 
-Retrieve job status timeline.
+Retrieve job status timeline (see: [ADR-003](adr/ADR-003-timeline-modeling.md)).
 
 ## 8. Tags
 
@@ -276,17 +286,17 @@ Attach a file to a job.
 
 **Behavior:**
 
-- Automatically increments version
-- Deactivates previous attachment
+- Automatically increments version (see: [ADR-003](adr/ADR-003-timeline-modeling.md))
+- Deactivates previous attachment (see: [ADR-005](adr/ADR-005-repository-pattern.md))
 - Creates a JobEvent
 
 ### GET `/jobs/{job_id}/files`
 
-Retrieve attachment history.
+Retrieve attachment history (see: [ADR-003](adr/ADR-003-timeline-modeling.md)).
 
 ### DELETE `/jobs/{job_id}/files/{attachment_id}`
 
-Detach a file (soft delete).
+Detach a file (soft delete) (see: [ADR-005](adr/ADR-005-repository-pattern.md)).
 
 ## 11. Interviews
 
@@ -320,6 +330,8 @@ Update interview outcome.
 }
 ```
 
+> Follows timeline-based modeling (see: [ADR-003](adr/ADR-003-timeline-modeling.md)).
+
 ## 12. Job Timeline (Unified Feed)
 
 ### GET `/jobs/{job_id}/timeline`
@@ -346,19 +358,21 @@ Returns a chronological feed combining:
 ]
 ```
 
+> Timeline feed fully implements append-only modeling (see: [ADR-003](adr/ADR-003-timeline-modeling.md)).
+
 ## 13. Analytics
 
 ### GET `/analytics/job-pipeline`
 
-Aggregate job counts by status.
+Aggregate job counts by status (see: [ADR-003](adr/ADR-003-timeline-modeling.md)).
 
 ### GET `/analytics/salary-vs-col`
 
-Compare salaries against cost of living per location.
+Compare salaries against cost of living per location (see: [ADR-002](adr/ADR-002-enum-strategy.md), [ADR-003](adr/ADR-003-timeline-modeling.md)).
 
 ## 14. Error Handling
 
-All errors follow FastAPI's standard format:
+All errors follow FastAPI's standard format and domain error mapping (see: [ADR-006](adr/ADR-006-domain-errors.md)):
 
 **Response:**
 
@@ -374,8 +388,11 @@ Validation errors return structured field-level messages.
 
 - API versions are explicit in the URL
 - Breaking changes require a new version
-- Enum values are stable and never reordered
+- Enum values are stable and never reordered (see: [ADR-002](adr/ADR-002-enum-strategy.md))
 - Fields are deprecated before removal
+- Long-term maintainability
+
+> It prioritizes clarity, stability, and explicit workflows over incidental complexity.
 
 ## 16. Audience & Intent
 

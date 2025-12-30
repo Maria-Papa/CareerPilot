@@ -15,8 +15,7 @@ CareerPilot uses multiple domain enums (e.g., JobStatus, InterviewType, FileType
 
 ## Scope
 
-This decision defines how domain enums are represented, persisted, and
-exposed across the CareerPilot system.
+This decision defines how domain enums are represented, persisted, and exposed across the CareerPilot system.
 
 It supports the architectural goals described in:
 
@@ -54,5 +53,4 @@ Specifically, this ADR impacts:
 - [`ADR-001-architecture.md`](ADR-001-architecture.md)
 - [`public_api_contract.md`](../public_api_contract.md)
 
-This enum strategy is intended to minimize coupling between the database,
-application logic, and public API while enabling safe evolution over time.
+This enum strategy is intended to minimize coupling between the database, application logic, and public API while enabling safe evolution over time.
