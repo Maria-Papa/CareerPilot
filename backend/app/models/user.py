@@ -21,3 +21,6 @@ class User(Base, TimestampMixin, SoftDeleteMixin):
 
     jobs: Mapped[list["Job"]] = relationship(back_populates="user")
     files: Mapped[list["File"]] = relationship(back_populates="user")
+
+    def __repr__(self) -> str:
+        return f"User(id={self.id!r}, email={self.email!r})"

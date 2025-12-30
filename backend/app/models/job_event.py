@@ -32,3 +32,9 @@ class JobEvent(Base, TimestampMixin):
     payload: Mapped[dict | None] = mapped_column(JSON)
 
     job: Mapped["Job"] = relationship(back_populates="events")
+
+    def __repr__(self) -> str:
+        return (
+            f"JobEvent(id={self.id!r}, job_id={self.job_id!r}, "
+            f"event_type={self.event_type!r}, payload={self.payload!r})"
+        )

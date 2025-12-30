@@ -20,4 +20,7 @@ class CostOfLiving(Base, TimestampMixin, SoftDeleteMixin):
     yearly_cost: Mapped[int] = mapped_column(Integer)  # stored in cents
     title: Mapped[str | None] = mapped_column(String(100))
 
-    location: Mapped["Location"] = relationship()
+    location: Mapped["Location"] = relationship(back_populates="cost_of_living_entries")
+
+    def __repr__(self) -> str:
+        return f"CostOfLiving(id={self.id!r}, location_id={self.location_id!r}, yearly_cost={self.yearly_cost!r})"

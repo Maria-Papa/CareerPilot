@@ -37,8 +37,11 @@ class JobFileAttachment(Base):
     detached_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     job: Mapped["Job"] = relationship(back_populates="attachments")
-    file: Mapped["File"] = relationship()
+    file: Mapped["File"] = relationship(back_populates="attachments")
 
-    __table_args__ = (
-        UniqueConstraint("job_id", "file_id", "version", name="uq_job_file_version"),
-    )
+    def __repr__(self) -> str:
+        return (
+            f"JobFileAttachment(id={self.id!r}, job_id={self.job_id!r}, "
+            f"file_id={self.file_id!r}, version={self.version!r}, "
+            f"is_active={self.is_active!r})"
+        )

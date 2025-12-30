@@ -12,11 +12,16 @@ class JobTag(Base):
     __tablename__ = "job_tags"
 
     job_id: Mapped[int] = mapped_column(
-        ForeignKey("jobs.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey("jobs.id", ondelete="CASCADE"),
+        primary_key=True,
     )
     tag_id: Mapped[int] = mapped_column(
-        ForeignKey("tags.id", ondelete="CASCADE"), primary_key=True
+        ForeignKey("tags.id", ondelete="CASCADE"),
+        primary_key=True,
     )
 
-    job: Mapped["Job"] = relationship(back_populates="tags")
-    tag: Mapped["Tag"] = relationship(back_populates="jobs")
+    job: Mapped["Job"] = relationship(back_populates="job_tag_links")
+    tag: Mapped["Tag"] = relationship(back_populates="job_tag_links")
+
+    def __repr__(self) -> str:
+        return f"JobTag(job_id={self.job_id!r}, tag_id={self.tag_id!r})"

@@ -18,3 +18,6 @@ class Company(Base, TimestampMixin, SoftDeleteMixin):
     industry: Mapped[str | None] = mapped_column(String(100))
 
     jobs: Mapped[list["Job"]] = relationship(back_populates="company")
+
+    def __repr__(self) -> str:
+        return f"Company(id={self.id!r}, name={self.name!r})"

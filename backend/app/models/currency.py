@@ -16,3 +16,6 @@ class Currency(Base, TimestampMixin):
     symbol: Mapped[str | None] = mapped_column(String(5))
 
     locations: Mapped[list["Location"]] = relationship(back_populates="currency")
+
+    def __repr__(self) -> str:
+        return f"Currency(id={self.id!r}, code={self.code!r})"

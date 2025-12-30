@@ -23,3 +23,4 @@ class SoftDeleteMixin:
         DateTime(timezone=True),
         nullable=True,
     )
+    # TODO: Add a `is_deleted` hybrid property for easier querying

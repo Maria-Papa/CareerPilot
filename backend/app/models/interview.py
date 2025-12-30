@@ -1,9 +1,8 @@
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
-from sqlalchemy import Enum, ForeignKey, DateTime, Index
+from sqlalchemy import Enum, ForeignKey, DateTime, Index, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy.sql import func
 from app.enums import InterviewOutcome, InterviewType
 from app.models import Base, TimestampMixin
 
@@ -41,6 +40,13 @@ class Interview(Base, TimestampMixin):
         ),
         nullable=True,
     )
-    notes: Mapped[str | None] = mapped_column()
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     job: Mapped["Job"] = relationship(back_populates="interviews")
+
+    def __repr__(self) -> str:
+        return (
+            f"Interview(id={self.id!r}, job_id={self.job_id!r}, "
+            f"interview_type={self.interview_type!r}, scheduled_at={self.scheduled_at!r}, "
+            f"outcome={self.outcome!r})"
+        )
