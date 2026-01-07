@@ -51,7 +51,7 @@ If you are reviewing this as an interviewer or engineer:
 1. Start with the high-level README (this file)
 2. Read the architecture overview in [`docs/architecture.md`](docs/architecture.md)
 3. Browse the ADRs in [`docs/adr/`](docs/adr/) to understand trade-offs
-4. Skim the public API contract to see how the system is intended to be consumed
+4. Skim the [`docs/public_api_contract.md`](docs/public_api_contract.md) to see how the system is intended to be consumed
 
 Code will evolve; **architecture and intent are already stable**.
 
