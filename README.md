@@ -1,190 +1,173 @@
-# 🚀 CareerPilot – Personal ATS & Job Application Automation
+# 💼 CareerPilot – Personal ATS & Job Application Automation
 
-CareerPilot is a modern, AI-powered, fully personal Applicant Tracking System (ATS) designed for software engineers who want to organize, automate, and optimize their job-search process.
+![Status](https://img.shields.io/badge/status-in%20development-yellow)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Python](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/fastapi-latest-009688?logo=fastapi&logoColor=white)
+![Next.js](https://img.shields.io/badge/next.js-14-black?logo=next.js&logoColor=white)
+![Architecture](https://img.shields.io/badge/architecture-ADR--driven-purple)
 
-This project acts both as a **product** and a **portfolio piece**, highlighting backend architecture, frontend engineering, automation, scraping, and AI integration.
+## Overview
 
-## 🌟 Features
+CareerPilot is a modern, AI-powered, **personal Applicant Tracking System (ATS)** built to organize, automate, and analyze the job-search process.
 
-### 🔍 Job Discovery & Tracking
+The project was originally designed for **my own use during job interviews** and is now **open-sourced** for visibility and learning. It also acts as a **portfolio project**, showcasing backend architecture, API design, and documentation-first engineering.
 
-- Dynamic job scraping engine (config-driven, no code changes needed)
-- Job saving, tagging, and scoring
-- Timeline of all application events (applied → interviews → offer → rejection)
-- Store salary expectations, offered salary, COL, flexibility, job URL
-- Track status: `applied`, `saved`, `declined`, `rejected`, `no response`
-- Store customized CV & cover letter per application
+This repository is intentionally public **before an MVP exists** to demonstrate how I reason about systems, structure codebases, and document decisions from day one.
 
-### 🤖 Automation & AI
+## Project Status
 
-- AI-powered resume generation from LaTeX template
-- AI-powered cover letter writer tailored for each job
-- Predict interview questions based on role + past data
-- Background workers for scraping, scoring, notifications
-- Email parsing: auto-detect application updates, interview invites, assessments
+This project is in **early development**.
 
-### 📈 Insights & Visualization
+- There is no MVP yet
+- Features and APIs are incomplete
+- Documentation may describe *planned* behavior
 
-- Pie chart for application status
-- Salary comparison vs market averages & medians
-- Cost-of-living savings estimation per city
-- Job funnel & timeline graphs
-- Company salary history for positions
+The current value of the repository is architectural clarity and design intent, not runnable completeness.
 
-### 💼 Career Data Management
+## Project Progress
 
-- Master JSON of full career history
-- Store all emails per job (application, interviews, assessments)
-- Track interview questions asked
-- Track take-home assignments
-- Salary intelligence per company & city
+Detailed mvp implementation progress is tracked in [`docs/progress/mvp_progress.md`](docs/progress/mvp_progress.md).
 
-## 🧱 Architecture Overview
+## Why This Project Exists
 
-CareerPilot is built using a modern, service-oriented stack optimized for scraping, automation, and AI agents.
+Job searching produces fragmented data:
 
-**Frontend:** Next.js (React), TypeScript, TailwindCSS, Shadcn/UI, Recharts </br>
-**Backend:** Python (FastAPI) </br>
-**DB:** PostgreSQL </br>
-**Queue:** Redis + RQ or Celery </br>
-**Scraping:** Playwright (browser) + Dynamic JSON config system </br>
-**AI:** OpenAI API (agents), LaTeX PDF rendering </br>
-**Environment:** WSL2 (Ubuntu), Docker, Docker Compose
+- applications
+- CV and cover letter versions
+- emails and interviews
+- salaries and locations
 
-## 🛠 Installed VS Code Plugins (Verified Publishers Only)
+CareerPilot treats job hunting as **structured data**, focusing on:
 
-### Python / Backend
+- clean separation of concerns
+- explicit design decisions
+- production-grade practices applied in a personal project
 
-- **Python** – Microsoft
-- **Pylance** – Microsoft
-- **Black Formatter** – Microsoft
+## How to Read This Repository
 
-### Frontend / React / Next.js
+If you are reviewing this as an interviewer or engineer:
 
-- **Tailwind CSS IntelliSense** – Tailwind Labs
-- **Prettier - Code formatter** – Prettier
-- **TypeScript and JavaScript Language Features (built-in)** – Microsoft
+1. Start with the high-level README (this file)
+2. Read the architecture overview in [`docs/architecture.md`](docs/architecture.md)
+3. Browse the ADRs in [`docs/adr/`](docs/adr/) to understand trade-offs
+4. Skim the public API contract to see how the system is intended to be consumed
 
-### Productivity / Tooling
+Code will evolve; **architecture and intent are already stable**.
 
-- **GitLens — Git supercharged** – GitKraken
-- **Docker** – Microsoft
-- **YAML** – Red Hat
+## Planned Capabilities
 
-### Documentation / Data
+### Job Tracking
 
-- **Markdown All in One** – Yu Zhang
-- **JSON Language Features (built-in)** – Microsoft
+- Track job applications and status changes
+- Timeline-based history (applied → interview → offer → rejection)
+- Store CVs and cover letters per application
+- Salary and cost-of-living metadata
 
-## 🗂 Project Structure (Planned)
+### Automation & AI (Planned)
 
-```txt
-careerpilot/
-backend/
-app/
-api/
-models/
-services/
-scraping/
-configs/
-plugins/
-tests/
-Dockerfile
-frontend/
-src/
-components/
-pages/
-hooks/
-services/
-public/
-Dockerfile
-data/
-latex_templates/
-resumes/
-cover_letters/
-infra/
-docker-compose.yml
-nginx/
-docs/
-architecture.md
-manifest.md
-.vscode/
-extensions.json
-settings.json
-README.md
+- Config-driven job scraping
+- AI-assisted CV and cover letter generation
+- Background workers for scoring and notifications
+- Email parsing for application updates
+
+### Insights (Planned)
+
+- Application funnel and timelines
+- Salary comparisons
+- Cost-of-living impact per city
+
+## Architecture Snapshot
+
+CareerPilot follows an **API-first, layered modular monolith**.
+
+```text
+Routes → Services → Repositories → Domain Models
 ```
 
-## 🧪 MVP Scope
+Key characteristics:
 
-### Backend (FastAPI)
+- strict separation of concerns
+- business logic isolated from frameworks
+- decisions documented via Architectural Decision Records (ADRs)
 
-- User auth (token-based)
-- CRUD for job applications
-- File upload for CV vs CL
-- Store salary + COL data
-- Basic scraping (1–2 sites)
-- Timeline events API
-- Pie chart data endpoint
+## Technology Stack
 
-### Frontend (Next.js)
+### Backend
 
-- Dashboard + pie chart
-- Job list & details
-- Add/update job form
-- Upload CV/cover letter per job
-- Salary & COL input screens
+- Python 3.11
+- FastAPI
+- SQLAlchemy (synchronous)
+- SQLite for development, PostgreSQL planned
 
-### Background Tasks
+### Frontend
 
-- Scheduled scraping (small)
-- Simple job scoring
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
 
-## 🛠 Development Setup
+### Environment
 
-### Prerequisites
+- Docker and Docker Compose
 
-- Windows 11 with **WSL2 (Ubuntu)**
-- Docker + Docker Compose
+## Documentation
+
+Documentation is treated as a first-class artifact.
+
+- [`docs/architecture.md`](docs/architecture.md) – system overview and layering
+- [`docs/adr/`](docs/adr/) – architectural decision records
+- [`docs/public_api_contract.md`](docs/public_api_contract.md) – API guarantees and stability rules
+- [`docs/openapi.v1.yml`](docs/openapi.v1.yml) – machine-readable API specification
+- [`docs/api_evolution.md`](docs/api_evolution.md) – versioning and deprecation strategy
+
+## Development Setup (Early)
+
+Requirements:
+
+- Docker & Docker Compose
 - Python 3.11
 - Node.js 20+
-- LaTeX distribution (TexLive or MiKTeX)
-
-### Install (WSL2)
 
 ```bash
-git clone https://github.com/yourname/careerpilot.git
+git clone https://github.com/Maria-Papa/CareerPilot.git
 cd careerpilot
 docker-compose up --build
 ```
 
-Frontend will run at: <http://localhost:3000>
+Local ports:
 
-Backend will run at: <http://localhost:8000>
+- Frontend: <http://localhost:3000>
+- Backend: <http://localhost:8000>
 
-## 🚧 Roadmap
+## Roadmap (High Level)
 
-### Version 1.0 (MVP)
+### Version 1.0 – MVP
 
-- Basic scraper
-- Dashboard + job tracking
-- Store CV/CL per application
-- Salary/COL inputs & graphs
-- Timeline + events
+- Core job tracking
+- Manual job entry
+- Dashboard with basic charts
+- CV and cover letter storage
 
 ### Version 2.0
 
-- Email parsing (Gmail API)
-- Job scoring AI agent
-- Interview question predictor
-- Browser extension for auto-fill
+- Scraping engine
+- Email parsing
+- AI-assisted scoring
 
 ### Version 3.0
 
-- Multi-user capability
-- SaaS version
-- Automated city salary scraping
-- Marketplace of scraping configs
+- Multi-user support
+- SaaS exploration
 
-## 📄 License
+## Philosophy
 
-MIT License.
+- Built for personal use, shared openly
+- Learn by applying real-world best practices
+- Architecture decisions are explicit and documented
+- Documentation evolves alongside the code
+
+## License
+
+MIT License
