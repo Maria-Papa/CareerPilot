@@ -3,13 +3,14 @@ from typing import TYPE_CHECKING
 from sqlalchemy import Enum, Index, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.enums import FileType
-from app.models import Base, TimestampMixin, SoftDeleteMixin
+from app.models import TimestampMixin, SoftDeleteMixin
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import User, JobFileAttachment
 
 
-class File(Base, TimestampMixin, SoftDeleteMixin):
+class File(BaseModel, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "files"
     __table_args__ = (
         Index("idx_files_user_id", "user_id"),

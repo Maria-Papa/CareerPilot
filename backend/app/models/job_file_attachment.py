@@ -11,13 +11,13 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from app.models import Base
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job, File
 
 
-class JobFileAttachment(Base):
+class JobFileAttachment(BaseModel):
     __tablename__ = "job_file_attachments"
     __table_args__ = (
         UniqueConstraint("job_id", "file_id", "version", name="uq_job_file_version"),

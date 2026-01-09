@@ -1,4 +1,3 @@
-from .base import Base
 from .company import Company
 from .cost_of_living import CostOfLiving
 from .currency import Currency
@@ -15,7 +14,6 @@ from .tag import Tag
 from .user import User
 
 __all__ = [
-    "Base",
     "Company",
     "CostOfLiving",
     "Currency",

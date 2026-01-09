@@ -11,7 +11,8 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
 from app.enums import EmploymentType, FlexibilityType, JobStatus
-from app.models import Base, TimestampMixin, SoftDeleteMixin
+from app.models import TimestampMixin, SoftDeleteMixin
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import (
@@ -26,7 +27,7 @@ if TYPE_CHECKING:
     )
 
 
-class Job(Base, TimestampMixin, SoftDeleteMixin):
+class Job(BaseModel, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "jobs"
     __table_args__ = (
         Index("idx_jobs_user_status", "user_id", "current_status"),

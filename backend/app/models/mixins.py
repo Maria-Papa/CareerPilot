@@ -2,6 +2,7 @@ from datetime import datetime
 from sqlalchemy import DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
+from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class TimestampMixin:
@@ -19,8 +20,8 @@ class TimestampMixin:
 
 
 class SoftDeleteMixin:
-    deleted_at: Mapped[datetime | None] = mapped_column(
-        DateTime(timezone=True),
-        nullable=True,
-    )
-    # TODO: Add a `is_deleted` hybrid property for easier querying
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+    @hybrid_property
+    def is_deleted(self) -> bool:
+        return self.deleted_at is not None

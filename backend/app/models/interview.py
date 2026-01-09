@@ -4,13 +4,14 @@ from datetime import datetime
 from sqlalchemy import Enum, ForeignKey, DateTime, Index, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.enums import InterviewOutcome, InterviewType
-from app.models import Base, TimestampMixin
+from app.models import TimestampMixin
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job
 
 
-class Interview(Base, TimestampMixin):
+class Interview(BaseModel, TimestampMixin):
     __tablename__ = "interviews"
     __table_args__ = (
         Index("idx_interviews_job_id_scheduled_at", "job_id", "scheduled_at"),

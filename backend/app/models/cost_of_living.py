@@ -2,13 +2,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from sqlalchemy import Index, String, Integer, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models import Base, TimestampMixin, SoftDeleteMixin
+from app.models import TimestampMixin, SoftDeleteMixin
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Location
 
 
-class CostOfLiving(Base, TimestampMixin, SoftDeleteMixin):
+class CostOfLiving(BaseModel, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "cost_of_living"
     __table_args__ = (
         Index("idx_col_location_id", "location_id"),

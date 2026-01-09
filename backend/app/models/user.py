@@ -2,14 +2,15 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
 from sqlalchemy import Boolean, DateTime, String
-from app.models import Base, TimestampMixin, SoftDeleteMixin
+from app.models import TimestampMixin, SoftDeleteMixin
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job, File
 
 
-class User(Base, TimestampMixin, SoftDeleteMixin):
+class User(BaseModel, TimestampMixin, SoftDeleteMixin):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(primary_key=True)

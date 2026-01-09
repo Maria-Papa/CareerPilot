@@ -2,13 +2,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models import Base, TimestampMixin
+from app.models import TimestampMixin
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Currency, Job, CostOfLiving
 
 
-class Location(Base, TimestampMixin):
+class Location(BaseModel, TimestampMixin):
     __tablename__ = "locations"
 
     id: Mapped[int] = mapped_column(primary_key=True)

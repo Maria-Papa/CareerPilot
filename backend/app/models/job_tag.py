@@ -2,13 +2,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.models import Base
+from app.db.base import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job, Tag
 
 
-class JobTag(Base):
+class JobTag(BaseModel):
     __tablename__ = "job_tags"
 
     job_id: Mapped[int] = mapped_column(
