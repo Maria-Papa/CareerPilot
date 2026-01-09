@@ -1,5 +1,6 @@
 from .base import BaseRepository
 from .company import CompanyRepository
+from .cost_of_living import CostOfLivingRepository
 from .currency import CurrencyRepository
 from .file import FileRepository
 from .interview import InterviewRepository
@@ -15,6 +16,7 @@ from .user import UserRepository
 __all__ = [
     "BaseRepository",
     "CompanyRepository",
+    "CostOfLivingRepository",
     "CurrencyRepository",
     "FileRepository",
     "InterviewRepository",
