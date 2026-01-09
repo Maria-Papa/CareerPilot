@@ -10,6 +10,7 @@ from .job_status_history import JobStatusHistoryRepository
 from .job_tag import JobTagRepository
 from .job import JobRepository
 from .location import LocationRepository
+from .soft_delete_base import SoftDeleteBaseRepository
 from .tag import TagRepository
 from .user import UserRepository
 
@@ -26,6 +27,7 @@ __all__ = [
     "JobTagRepository",
     "JobRepository",
     "LocationRepository",
+    "SoftDeleteBaseRepository",
     "TagRepository",
     "UserRepository",
 ]

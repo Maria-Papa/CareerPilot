@@ -4,7 +4,7 @@ from datetime import datetime
 from sqlalchemy import Boolean, DateTime, String
 from app.models import TimestampMixin, SoftDeleteMixin
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job, File

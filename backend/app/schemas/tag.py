@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class TagBase(BaseModel):
@@ -14,7 +14,7 @@ class TagUpdate(BaseModel):
     name: str | None = None
 
 
-class TagRead(TagBase, TimestampRead, SoftDeleteRead):
+class TagRead(TagBase, TimestampRead):
     id: int
 
     class Config:

@@ -4,7 +4,7 @@ from sqlalchemy import Enum, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.enums import JobStatus
 from app.models import TimestampMixin
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job

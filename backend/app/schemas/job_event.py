@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from app.enums import JobEventType
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class JobEventBase(BaseModel):
@@ -19,7 +19,7 @@ class JobEventUpdate(BaseModel):
     payload: dict | None = None
 
 
-class JobEventRead(JobEventBase, TimestampRead, SoftDeleteRead):
+class JobEventRead(JobEventBase, TimestampRead):
     id: int
 
     class Config:

@@ -1,12 +1,12 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 
 from app.enums import JobStatus
 from app.models import Job, JobStatusHistory, JobFileAttachment
-from app.repositories import BaseRepository
+from app.repositories import SoftDeleteBaseRepository
 
 
-class JobRepository(BaseRepository[Job]):
+class JobRepository(SoftDeleteBaseRepository[Job]):
     def __init__(self):
         super().__init__(Job)
 
@@ -40,7 +40,7 @@ class JobRepository(BaseRepository[Job]):
                 file_id=file_id,
                 version=version,
                 is_active=True,
-                attached_at=datetime.utcnow(),
+                attached_at=datetime.now(timezone.utc),
             )
             db.add(attachment)
             db.commit()

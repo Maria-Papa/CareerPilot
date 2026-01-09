@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class LocationBase(BaseModel):
@@ -18,7 +18,7 @@ class LocationUpdate(BaseModel):
     currency_id: int | None = None
 
 
-class LocationRead(LocationBase, TimestampRead, SoftDeleteRead):
+class LocationRead(LocationBase, TimestampRead):
     id: int
 
     class Config:

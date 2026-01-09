@@ -4,7 +4,7 @@ from sqlalchemy import Enum, Index, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.enums import FileType
 from app.models import TimestampMixin, SoftDeleteMixin
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import User, JobFileAttachment

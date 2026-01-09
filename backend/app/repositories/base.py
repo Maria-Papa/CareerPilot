@@ -1,44 +1,55 @@
-from datetime import datetime
 from typing import Generic, Sequence, Type, TypeVar
 
 from sqlalchemy import select
-from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm import Session
 
 from app.db import BaseModel
-from app.models.mixins import SoftDeleteMixin
 
 ModelType = TypeVar("ModelType", bound=BaseModel)
 
 
 class BaseRepository(Generic[ModelType]):
-    """
-    Generic synchronous repository.
-    Provides basic CRUD with optional soft-delete support.
-    """
-
     def __init__(self, model: Type[ModelType]):
         self.model = model
 
+    def _base_query(self):
+        return select(self.model)
+
     def get(self, session: Session, id: int) -> ModelType | None:
         try:
-            stmt = select(self.model).where(self.model.id == id)
-            # Only apply soft-delete filter if model has deleted_at
-            if issubclass(self.model, SoftDeleteMixin):
-                stmt = stmt.where(self.model.deleted_at.is_(None))
+            stmt = self._base_query().where(self.model.id == id)
             return session.execute(stmt).scalar_one_or_none()
         except SQLAlchemyError:
             session.rollback()
             raise
 
-    def list(
-        self, session: Session, skip: int = 0, limit: int = 100
+    def get_all(
+        self,
+        session: Session,
+        *,
+        offset: int = 0,
+        limit: int = 100,
     ) -> Sequence[ModelType]:
         try:
-            stmt = select(self.model).offset(skip).limit(limit)
-            if issubclass(self.model, SoftDeleteMixin):
-                stmt = stmt.where(self.model.deleted_at.is_(None))
+            stmt = self._base_query().offset(offset).limit(limit)
             return session.execute(stmt).scalars().all()
+        except SQLAlchemyError:
+            session.rollback()
+            raise
+
+    def find(self, session: Session, **filters) -> Sequence[ModelType]:
+        try:
+            stmt = self._base_query().filter_by(**filters)
+            return session.execute(stmt).scalars().all()
+        except SQLAlchemyError:
+            session.rollback()
+            raise
+
+    def find_one(self, session: Session, **filters) -> ModelType | None:
+        try:
+            stmt = self._base_query().filter_by(**filters)
+            return session.execute(stmt).scalar_one_or_none()
         except SQLAlchemyError:
             session.rollback()
             raise
@@ -55,8 +66,8 @@ class BaseRepository(Generic[ModelType]):
 
     def update(self, session: Session, instance: ModelType, values: dict) -> ModelType:
         try:
-            for k, v in values.items():
-                setattr(instance, k, v)
+            for key, value in values.items():
+                setattr(instance, key, value)
             session.commit()
             session.refresh(instance)
             return instance
@@ -64,15 +75,9 @@ class BaseRepository(Generic[ModelType]):
             session.rollback()
             raise
 
-    def soft_delete(self, session: Session, instance: ModelType) -> None:
-        """
-        Performs soft-delete if model has deleted_at; otherwise raises.
-        """
-        if not isinstance(instance, SoftDeleteMixin):
-            raise TypeError(f"{self.model.__name__} does not support soft-delete")
+    def delete(self, session: Session, instance: ModelType) -> None:
         try:
-            instance.deleted_at = datetime.utcnow()
-            session.add(instance)
+            session.delete(instance)
             session.commit()
         except SQLAlchemyError:
             session.rollback()

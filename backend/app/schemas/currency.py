@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class CurrencyBase(BaseModel):
@@ -16,7 +16,7 @@ class CurrencyUpdate(BaseModel):
     symbol: str | None = None
 
 
-class CurrencyRead(CurrencyBase, TimestampRead, SoftDeleteRead):
+class CurrencyRead(CurrencyBase, TimestampRead):
     id: int
 
     class Config:

@@ -12,7 +12,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
 from app.enums import EmploymentType, FlexibilityType, JobStatus
 from app.models import TimestampMixin, SoftDeleteMixin
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import (

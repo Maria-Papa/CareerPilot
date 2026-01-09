@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class CostOfLivingBase(BaseModel):
@@ -18,7 +18,7 @@ class CostOfLivingUpdate(BaseModel):
     title: str | None = None
 
 
-class CostOfLivingRead(CostOfLivingBase, TimestampRead, SoftDeleteRead):
+class CostOfLivingRead(CostOfLivingBase, TimestampRead):
     id: int
 
     class Config:

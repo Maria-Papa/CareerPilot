@@ -4,7 +4,7 @@ from sqlalchemy import Index, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
 from app.models import TimestampMixin
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import JobTag

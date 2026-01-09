@@ -11,13 +11,14 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from app.db.base import BaseModel
+from app.db import BaseModel
+from app.models import SoftDeleteMixin
 
 if TYPE_CHECKING:
     from app.models import Job, File
 
 
-class JobFileAttachment(BaseModel):
+class JobFileAttachment(BaseModel, SoftDeleteMixin):
     __tablename__ = "job_file_attachments"
     __table_args__ = (
         UniqueConstraint("job_id", "file_id", "version", name="uq_job_file_version"),

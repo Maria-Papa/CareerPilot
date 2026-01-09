@@ -1,7 +1,7 @@
 from app.models import File
-from app.repositories import BaseRepository
+from app.repositories import SoftDeleteBaseRepository
 
 
-class FileRepository(BaseRepository[File]):
+class FileRepository(SoftDeleteBaseRepository[File]):
     def __init__(self):
         super().__init__(File)

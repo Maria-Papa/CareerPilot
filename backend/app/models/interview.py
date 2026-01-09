@@ -5,7 +5,7 @@ from sqlalchemy import Enum, ForeignKey, DateTime, Index, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.enums import InterviewOutcome, InterviewType
 from app.models import TimestampMixin
-from app.db.base import BaseModel
+from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job

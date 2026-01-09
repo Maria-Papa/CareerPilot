@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class JobTagBase(BaseModel):
@@ -16,7 +16,7 @@ class JobTagUpdate(BaseModel):
     tag_id: int | None = None
 
 
-class JobTagRead(JobTagBase, TimestampRead, SoftDeleteRead):
+class JobTagRead(JobTagBase, TimestampRead):
     id: int
 
     class Config:

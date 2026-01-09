@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from app.enums import JobStatus
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead
 
 
 class JobStatusHistoryBase(BaseModel):
@@ -17,7 +17,7 @@ class JobStatusHistoryUpdate(BaseModel):
     status: JobStatus | None = None
 
 
-class JobStatusHistoryRead(JobStatusHistoryBase, TimestampRead, SoftDeleteRead):
+class JobStatusHistoryRead(JobStatusHistoryBase, TimestampRead):
     id: int
 
     class Config:
