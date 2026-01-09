@@ -1,5 +1,5 @@
-from app.models.job_status_history import JobStatusHistory
-from .base import BaseRepository
+from app.models import JobStatusHistory
+from app.repositories import BaseRepository
 
 
 class JobStatusHistoryRepository(BaseRepository[JobStatusHistory]):

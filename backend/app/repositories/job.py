@@ -2,10 +2,8 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 
 from app.enums import JobStatus
-from app.models.job import Job
-from app.models.job_status_history import JobStatusHistory
-from app.models.job_file_attachment import JobFileAttachment
-from app.repositories.base import BaseRepository
+from app.models import Job, JobStatusHistory, JobFileAttachment
+from app.repositories import BaseRepository
 
 
 class JobRepository(BaseRepository[Job]):

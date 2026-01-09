@@ -1,7 +1,7 @@
 from datetime import datetime
 from pydantic import BaseModel
 from app.enums import InterviewType, InterviewOutcome
-from .base import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead, SoftDeleteRead
 
 
 class InterviewBase(BaseModel):

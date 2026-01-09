@@ -1,5 +1,5 @@
-from app.models.job_tag import JobTag
-from .base import BaseRepository
+from app.models import JobTag
+from app.repositories import BaseRepository
 
 
 class JobTagRepository(BaseRepository[JobTag]):

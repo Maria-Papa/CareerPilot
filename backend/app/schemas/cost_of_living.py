@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from .base import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead, SoftDeleteRead
 
 
 class CostOfLivingBase(BaseModel):

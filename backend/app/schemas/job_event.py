@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from app.enums import JobEventType
-from .base import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead, SoftDeleteRead
 
 
 class JobEventBase(BaseModel):

@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
-from app.db.base import BaseModel
+from app.db import BaseModel
 from app.models.mixins import SoftDeleteMixin
 
 ModelType = TypeVar("ModelType", bound=BaseModel)

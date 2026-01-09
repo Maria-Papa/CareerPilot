@@ -1,6 +1,7 @@
-from app.models.user import User
-from app.repositories.base import BaseRepository
+from app.models import User
+from app.repositories import BaseRepository
 
 
 class UserRepository(BaseRepository[User]):
-    pass
+    def __init__(self):
+        super().__init__(User)

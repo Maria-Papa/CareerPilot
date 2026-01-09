@@ -1,5 +1,5 @@
-from app.models.file import File
-from .base import BaseRepository
+from app.models import File
+from app.repositories import BaseRepository
 
 
 class FileRepository(BaseRepository[File]):

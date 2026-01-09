@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
-from .base import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead, SoftDeleteRead
 
 
 class UserBase(BaseModel):

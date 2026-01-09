@@ -1,8 +1,8 @@
 from datetime import datetime
 from sqlalchemy.orm import Session
 
-from app.models.job_file_attachment import JobFileAttachment
-from .base import BaseRepository
+from app.models import JobFileAttachment
+from app.repositories import BaseRepository
 
 
 class JobFileAttachmentRepository(BaseRepository[JobFileAttachment]):

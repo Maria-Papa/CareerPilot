@@ -1,5 +1,5 @@
-from app.models.currency import Currency
-from .base import BaseRepository
+from app.models import Currency
+from app.repositories import BaseRepository
 
 
 class CurrencyRepository(BaseRepository[Currency]):

@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
-from .base import TimestampRead, SoftDeleteRead
+from app.schemas import TimestampRead, SoftDeleteRead
 
 
 class JobFileAttachmentBase(BaseModel):

@@ -1,5 +1,5 @@
-from app.models.tag import Tag
-from .base import BaseRepository
+from app.models import Tag
+from app.repositories import BaseRepository
 
 
 class TagRepository(BaseRepository[Tag]):

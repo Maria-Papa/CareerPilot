@@ -1,5 +1,5 @@
-from app.models.company import Company
-from .base import BaseRepository
+from app.models import Company
+from app.repositories import BaseRepository
 
 
 class CompanyRepository(BaseRepository[Company]):
