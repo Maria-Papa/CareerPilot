@@ -1,4 +1,4 @@
 from .base import Base, BaseModel
-from .session import get_session
+from .session import engine, get_session
 
-__all__ = ["Base", "BaseModel", "get_session"]
+__all__ = ["Base", "BaseModel", "engine", "get_session"]

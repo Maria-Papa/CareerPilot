@@ -1,28 +1,22 @@
 from typing import Generic, Sequence, TypeVar
-from sqlalchemy.orm import Session
-from app.db import BaseModel
+
+from app.db.base import BaseModel
 from app.repositories.base import BaseRepository
 from app.repositories.soft_delete_base import SoftDeleteBaseRepository
+from sqlalchemy.orm import Session
 
 ModelType = TypeVar("ModelType", bound=BaseModel)
 
 
 class BaseService(Generic[ModelType]):
-    def __init__(
-        self,
-        repository: BaseRepository[ModelType] | SoftDeleteBaseRepository[ModelType],
-    ):
+    def __init__(self, repository: BaseRepository[ModelType]):
         self.repository = repository
 
     def get(self, session: Session, id: int) -> ModelType | None:
         return self.repository.get(session, id)
 
     def get_all(
-        self,
-        session: Session,
-        *,
-        offset: int = 0,
-        limit: int = 100,
+        self, session: Session, *, offset: int = 0, limit: int = 100
     ) -> Sequence[ModelType]:
         return self.repository.get_all(session, offset=offset, limit=limit)
 
@@ -35,12 +29,7 @@ class BaseService(Generic[ModelType]):
     def create(self, session: Session, instance: ModelType) -> ModelType:
         return self.repository.add(session, instance)
 
-    def update(
-        self,
-        session: Session,
-        instance: ModelType,
-        values: dict,
-    ) -> ModelType:
+    def update(self, session: Session, instance: ModelType, values: dict) -> ModelType:
         return self.repository.update(session, instance, values)
 
     def delete(self, session: Session, instance: ModelType) -> None:

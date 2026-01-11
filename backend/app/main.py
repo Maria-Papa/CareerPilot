@@ -1,11 +1,18 @@
 from fastapi import FastAPI
-from .database import engine, Base
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import jobs
+from app.db import engine, Base
+from app.api.v1 import router
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+# Create all database tables (for SQLite dev mode)
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title="CareerPilot API",
+    version="1.0.0",
+    description="Backend API for the CareerPilot application",
+)
 
 # CORS for frontend
 app.add_middleware(
@@ -19,9 +26,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(jobs.router)
+app.include_router(router)
 
 
 @app.get("/")
 def root():
     return {"message": "Career Pilot backend running"}
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}

@@ -1,10 +1,9 @@
 from typing import Generic, Sequence, Type, TypeVar
 
+from app.db.base import BaseModel
 from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import Session
-
-from app.db import BaseModel
 
 ModelType = TypeVar("ModelType", bound=BaseModel)
 
@@ -25,11 +24,7 @@ class BaseRepository(Generic[ModelType]):
             raise
 
     def get_all(
-        self,
-        session: Session,
-        *,
-        offset: int = 0,
-        limit: int = 100,
+        self, session: Session, *, offset: int = 0, limit: int = 100
     ) -> Sequence[ModelType]:
         try:
             stmt = self._base_query().offset(offset).limit(limit)

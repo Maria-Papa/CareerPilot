@@ -1,8 +1,7 @@
-from pydantic import BaseModel
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 
 
-class CompanyBase(BaseModel):
+class CompanyBase(ORMBase):
     name: str
     logo_url: str | None = None
     website: str | None = None
@@ -13,7 +12,7 @@ class CompanyCreate(CompanyBase):
     pass
 
 
-class CompanyUpdate(BaseModel):
+class CompanyUpdate(ORMBase):
     name: str | None = None
     logo_url: str | None = None
     website: str | None = None

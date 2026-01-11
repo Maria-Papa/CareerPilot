@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy.orm import Session
 from app.models import Interview
 from app.repositories import InterviewRepository
@@ -14,7 +14,6 @@ class InterviewService(BaseService[Interview]):
 
     def create_interview(self, session: Session, data: InterviewCreate) -> Interview:
         interview = Interview(**data.model_dump())
-        interview.created_at = datetime.now(timezone.utc)
         return self.create(session, interview)
 
     def update_interview(

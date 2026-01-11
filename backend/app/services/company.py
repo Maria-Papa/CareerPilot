@@ -1,15 +1,36 @@
-from sqlalchemy.orm import Session
+from typing import Sequence
+
+from app.core import EntityNotFoundError
 from app.models import Company
-from app.repositories import CompanyRepository
-from app.schemas import CompanyCreate, CompanyUpdate
-from app.services import BaseService
+from app.repositories.company import CompanyRepository
+from app.schemas.company import CompanyCreate, CompanyUpdate
+from app.services.soft_delete_base import SoftDeleteService
+from sqlalchemy.orm import Session
 
 
-class CompanyService(BaseService[Company]):
-    repository: CompanyRepository
+class CompanyService(SoftDeleteService[Company]):
+    def __init__(self, repository: CompanyRepository | None = None):
+        repository = repository or CompanyRepository()
+        super().__init__(repository)
 
-    def __init__(self):
-        super().__init__(CompanyRepository())
+    def list_companies(
+        self, session: Session, *, offset: int = 0, limit: int = 100
+    ) -> Sequence[Company]:
+        return self.get_all(session, offset=offset, limit=limit)
+
+    def get_company(self, session: Session, company_id: int) -> Company:
+        company = self.get(session, company_id)
+        if company is None:
+            raise EntityNotFoundError("Company not found")
+        return company
+
+    def get_company_including_deleted(
+        self, session: Session, company_id: int
+    ) -> Company:
+        company = self.repository.get_including_deleted(session, company_id)
+        if company is None:
+            raise EntityNotFoundError("Company not found")
+        return company
 
     def create_company(self, session: Session, data: CompanyCreate) -> Company:
         company = Company(**data.model_dump())
@@ -20,11 +41,3 @@ class CompanyService(BaseService[Company]):
     ) -> Company:
         values = data.model_dump(exclude_unset=True)
         return self.update(session, company, values)
-
-    def deactivate_company(self, session: Session, company: Company) -> Company:
-        company.is_deleted = True
-        return self.update(session, company, {"is_deleted": True})
-
-    def reactivate_company(self, session: Session, company: Company) -> Company:
-        company.is_deleted = False
-        return self.update(session, company, {"is_deleted": False})

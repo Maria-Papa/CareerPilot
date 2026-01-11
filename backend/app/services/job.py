@@ -5,6 +5,7 @@ from app.enums import JobStatus
 from app.repositories import JobRepository
 from app.schemas import JobCreate, JobUpdate
 from app.services import BaseService
+from app.core import InvalidStateTransitionError
 
 
 class JobService(BaseService[Job]):
@@ -15,7 +16,6 @@ class JobService(BaseService[Job]):
 
     def create_job(self, session: Session, data: JobCreate) -> Job:
         job = Job(**data.model_dump())
-        job.created_at = datetime.now(timezone.utc)
         return self.create(session, job)
 
     def update_job(self, session: Session, job: Job, data: JobUpdate) -> Job:
@@ -23,6 +23,9 @@ class JobService(BaseService[Job]):
         return self.update(session, job, values)
 
     def change_status(self, session: Session, job: Job, new_status: JobStatus) -> Job:
+        if job.current_status == JobStatus.REJECTED:
+            raise InvalidStateTransitionError()
+
         history = JobStatusHistory(job_id=job.id, status=new_status)
         session.add(history)
 
