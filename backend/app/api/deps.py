@@ -1,3 +1,4 @@
+# backend/app/api/deps.py
 from typing import Callable, TypeVar
 
 from app.core import EntityNotFoundError

@@ -1,3 +1,4 @@
+# backend/app/services/base.py
 from typing import Generic, Sequence, TypeVar
 
 from app.db.base import BaseModel

@@ -1,0 +1,8 @@
+pytest==9.0.2
+pluggy==1.6.0
+iniconfig==2.3.0
+Pygments==2.19.2
+annotated-doc==0.0.4
+annotated-types==0.7.0
+typing-inspection==0.4.2
+httpx==0.28.1

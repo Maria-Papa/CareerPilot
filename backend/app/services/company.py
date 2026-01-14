@@ -1,3 +1,4 @@
+# backend/app/services/company.py
 from typing import Sequence
 
 from app.core import EntityNotFoundError
@@ -18,19 +19,13 @@ class CompanyService(SoftDeleteService[Company]):
     ) -> Sequence[Company]:
         return self.get_all(session, offset=offset, limit=limit)
 
-    def get_company(self, session: Session, company_id: int) -> Company:
-        company = self.get(session, company_id)
-        if company is None:
-            raise EntityNotFoundError("Company not found")
-        return company
+    def get_company(self, session: Session, company_id: int) -> Company | None:
+        return self.get(session, company_id)
 
     def get_company_including_deleted(
         self, session: Session, company_id: int
-    ) -> Company:
-        company = self.repository.get_including_deleted(session, company_id)
-        if company is None:
-            raise EntityNotFoundError("Company not found")
-        return company
+    ) -> Company | None:
+        return self.repository.get_including_deleted(session, company_id)
 
     def create_company(self, session: Session, data: CompanyCreate) -> Company:
         company = Company(**data.model_dump())
