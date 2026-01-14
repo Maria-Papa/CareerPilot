@@ -1,4 +1,3 @@
-# backend/app/api/v1/companies.py
 from typing import List
 
 from app.api import get_entity_or_404

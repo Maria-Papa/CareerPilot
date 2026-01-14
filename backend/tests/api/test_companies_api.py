@@ -1,4 +1,3 @@
-# backend/tests/api/test_companies_api.py
 import pytest
 from tests.utils.api_assertions import (
     assert_404,

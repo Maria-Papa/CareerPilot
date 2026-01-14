@@ -1,4 +1,3 @@
-# backend/tests/repos/test_company_repo.py
 import pytest
 from app.models import Company
 from app.repositories.company import CompanyRepository

@@ -1,4 +1,3 @@
-# backend/tests/conftest.py
 from typing import Callable, Generator
 
 import pytest

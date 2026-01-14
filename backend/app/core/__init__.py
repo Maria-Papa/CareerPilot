@@ -1,3 +1,5 @@
+from error_handlers import register_error_handlers
+
 from .errors import (
     AccessDeniedError,
     ConflictError,
@@ -8,6 +10,7 @@ from .errors import (
 )
 
 __all__ = [
+    "register_error_handlers",
     "DomainError",
     "EntityNotFoundError",
     "InvalidStateTransitionError",

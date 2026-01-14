@@ -1,4 +1,3 @@
-# backend/app/services/soft_delete_base.py
 from typing import Generic, TypeVar
 
 from app.db.base import BaseModel

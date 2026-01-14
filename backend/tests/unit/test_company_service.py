@@ -1,4 +1,3 @@
-# backend/tests/services/test_company_service.py
 from unittest.mock import MagicMock
 
 import pytest

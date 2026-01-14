@@ -1,4 +1,3 @@
-# backend/app/services/company.py
 from typing import Sequence
 
 from app.core import EntityNotFoundError
