@@ -1,17 +1,20 @@
+from typing import cast
+
 import pytest
-from fastapi import Depends, HTTPException
+from fastapi import Depends, FastAPI, HTTPException
+from fastapi.testclient import TestClient
 from tests.utils.api_assertions import assert_403
 
 pytestmark = pytest.mark.integration
 
 
-def test_permission_denied(client):
-    # Create a dummy dependency that always denies access
+def test_permission_denied(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
     def deny():
         raise HTTPException(status_code=403, detail="Forbidden")
 
-    # Add a temporary protected route
-    @client.app.get("/protected", dependencies=[Depends(deny)])
+    @app.get("/protected", dependencies=[Depends(deny)])
     def protected():
         return {"ok": True}
 

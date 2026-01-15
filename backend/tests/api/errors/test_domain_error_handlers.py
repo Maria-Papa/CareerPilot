@@ -1,3 +1,5 @@
+from typing import cast
+
 import pytest
 from app.core.errors import (
     AccessDeniedError,
@@ -6,6 +8,8 @@ from app.core.errors import (
     EntityNotFoundError,
     ValidationError,
 )
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
 from tests.utils.api_assertions import (
     assert_400,
     assert_403,
@@ -16,8 +20,10 @@ from tests.utils.api_assertions import (
 pytestmark = pytest.mark.integration
 
 
-def test_entity_not_found_handler(client):
-    @client.app.get("/force404")
+def test_entity_not_found_handler(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
+    @app.get("/force404")
     def force():
         raise EntityNotFoundError("missing")
 
@@ -26,8 +32,10 @@ def test_entity_not_found_handler(client):
     assert resp.json()["detail"] == "missing"
 
 
-def test_conflict_error_handler(client):
-    @client.app.get("/force409")
+def test_conflict_error_handler(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
+    @app.get("/force409")
     def force():
         raise ConflictError("duplicate")
 
@@ -36,8 +44,10 @@ def test_conflict_error_handler(client):
     assert resp.json()["detail"] == "duplicate"
 
 
-def test_access_denied_error_handler(client):
-    @client.app.get("/force403")
+def test_access_denied_error_handler(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
+    @app.get("/force403")
     def force():
         raise AccessDeniedError("no access")
 
@@ -46,8 +56,10 @@ def test_access_denied_error_handler(client):
     assert resp.json()["detail"] == "no access"
 
 
-def test_domain_validation_error_handler(client):
-    @client.app.get("/force400")
+def test_domain_validation_error_handler(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
+    @app.get("/force400")
     def force():
         raise ValidationError("invalid state")
 
@@ -56,8 +68,10 @@ def test_domain_validation_error_handler(client):
     assert resp.json()["detail"] == "invalid state"
 
 
-def test_generic_domain_error_handler(client):
-    @client.app.get("/force400-generic")
+def test_generic_domain_error_handler(client: TestClient) -> None:
+    app = cast(FastAPI, client.app)
+
+    @app.get("/force400-generic")
     def force():
         raise DomainError("generic domain failure")
 

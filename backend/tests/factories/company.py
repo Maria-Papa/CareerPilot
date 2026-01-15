@@ -1,7 +1,8 @@
 from app.models import Company
+from sqlalchemy.orm import Session
 
 
-def create_company(db_session, **kwargs):
+def create_company(db_session: Session, **kwargs) -> Company:
     defaults = {
         "name": "Company",
         "website": None,

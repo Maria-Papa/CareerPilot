@@ -2,14 +2,17 @@ from typing import Callable, Generator
 
 import pytest
 from app.core.errors import EntityNotFoundError
+from app.db import get_session as real_get_session
 from app.db.base import Base
-from app.db.session import get_session as real_get_session
 from app.main import create_app
 from app.models import Company
+from app.models.cost_of_living import CostOfLiving
+from app.models.location import Location
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from tests.factories.company import create_company
+from tests.factories import create_company, create_cost_of_living, create_location
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 
@@ -65,7 +68,7 @@ def db_session(engine, SessionLocal) -> Generator[Session, None, None]:
 
 
 @pytest.fixture
-def app(db_session) -> Generator:
+def app(db_session: Session) -> Generator[FastAPI, None, None]:
     """
     Create the real FastAPI app via create_app(), then override the DB dependency
     so request handlers use the test session instance.
@@ -92,7 +95,7 @@ def app(db_session) -> Generator:
 
 
 @pytest.fixture
-def client(app):
+def client(app: FastAPI) -> TestClient:
     return TestClient(app)
 
 
@@ -102,5 +105,24 @@ def client(app):
 
 
 @pytest.fixture
-def company_factory(db_session):
-    return lambda **kwargs: create_company(db_session, **kwargs)
+def company_factory(db_session: Session) -> Callable[..., Company]:
+    def factory(**kwargs) -> Company:
+        return create_company(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def cost_of_living_factory(db_session: Session) -> Callable[..., CostOfLiving]:
+    def factory(**kwargs) -> CostOfLiving:
+        return create_cost_of_living(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def location_factory(db_session: Session) -> Callable[..., Location]:
+    def factory(**kwargs) -> Location:
+        return create_location(db_session, **kwargs)
+
+    return factory

@@ -1,4 +1,9 @@
+from typing import Callable
+
 import pytest
+from app.models import Company
+from fastapi.testclient import TestClient
+from sqlalchemy.orm import Session
 from tests.utils.api_assertions import (
     assert_404,
     assert_list,
@@ -8,7 +13,7 @@ from tests.utils.api_assertions import (
 pytestmark = pytest.mark.integration
 
 
-def test_create_and_get_company(client, db_session):
+def test_create_and_get_company(client: TestClient, db_session: Session) -> None:
     payload = {"name": "ApiCo", "website": "https://api.co", "industry": "API"}
     resp = client.post("/companies", json=payload)
     assert_status(resp, 201)
@@ -21,7 +26,11 @@ def test_create_and_get_company(client, db_session):
     assert resp.json()["id"] == company_id
 
 
-def test_list_companies_endpoint(client, db_session, company_factory):
+def test_list_companies_endpoint(
+    client: TestClient,
+    db_session: Session,
+    company_factory: Callable[..., Company],
+) -> None:
     company_factory(name="ListAPI1")
     company_factory(name="ListAPI2")
 
@@ -30,7 +39,11 @@ def test_list_companies_endpoint(client, db_session, company_factory):
     assert_list(resp)
 
 
-def test_patch_company(client, db_session, company_factory):
+def test_patch_company(
+    client: TestClient,
+    db_session: Session,
+    company_factory: Callable[..., Company],
+) -> None:
     c = company_factory(name="PatchMe")
     payload = {"name": "Patched"}
 
@@ -42,7 +55,11 @@ def test_patch_company(client, db_session, company_factory):
     assert c.name == "Patched"
 
 
-def test_delete_and_restore_endpoints(client, db_session, company_factory):
+def test_delete_and_restore_endpoints(
+    client: TestClient,
+    db_session: Session,
+    company_factory: Callable[..., Company],
+) -> None:
     c = company_factory(name="DeleteAPI")
 
     resp = client.delete(f"/companies/{c.id}")

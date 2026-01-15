@@ -16,15 +16,18 @@ class CompanyService(SoftDeleteService[Company]):
     def list_companies(
         self, session: Session, *, offset: int = 0, limit: int = 100
     ) -> Sequence[Company]:
-        return self.get_all(session, offset=offset, limit=limit)
+        return self.list(session, offset=offset, limit=limit)
 
-    def get_company(self, session: Session, company_id: int) -> Company | None:
-        return self.get(session, company_id)
+    def get_company(self, session: Session, company_id: int) -> Company:
+        company = self.get(session, company_id)
+        if company is None:
+            raise EntityNotFoundError("Company not found")
+        return company
 
     def get_company_including_deleted(
         self, session: Session, company_id: int
     ) -> Company | None:
-        return self.repository.get_including_deleted(session, company_id)
+        return self.soft_repo.get_including_deleted(session, company_id)
 
     def create_company(self, session: Session, data: CompanyCreate) -> Company:
         company = Company(**data.model_dump())

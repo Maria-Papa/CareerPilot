@@ -9,13 +9,15 @@ ModelType = TypeVar("ModelType", bound=BaseModel)
 
 
 class BaseService(Generic[ModelType]):
+    repository: BaseRepository[ModelType]
+
     def __init__(self, repository: BaseRepository[ModelType]):
         self.repository = repository
 
     def get(self, session: Session, id: int) -> ModelType | None:
         return self.repository.get(session, id)
 
-    def get_all(
+    def list(
         self, session: Session, *, offset: int = 0, limit: int = 100
     ) -> Sequence[ModelType]:
         return self.repository.get_all(session, offset=offset, limit=limit)

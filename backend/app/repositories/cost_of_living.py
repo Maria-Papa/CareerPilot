@@ -1,5 +1,5 @@
 from app.models import CostOfLiving
-from app.repositories import BaseRepository
+from app.repositories.base import BaseRepository
 
 
 class CostOfLivingRepository(BaseRepository[CostOfLiving]):
