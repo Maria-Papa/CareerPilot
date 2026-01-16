@@ -5,7 +5,18 @@ from app.core.errors import EntityNotFoundError
 from app.db.base import Base
 from app.db.session import get_session as real_get_session
 from app.main import create_app
-from app.models import Company, CostOfLiving, Currency, File, Location, Tag
+from app.models import (
+    Company,
+    CostOfLiving,
+    Currency,
+    File,
+    Interview,
+    Job,
+    JobEvent,
+    Location,
+    Tag,
+    User,
+)
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -17,6 +28,7 @@ from tests.factories import (
     create_file,
     create_interview,
     create_job,
+    create_job_event,
     create_location,
     create_tag,
     create_user,
@@ -158,7 +170,7 @@ def file_factory(db_session: Session) -> Callable[..., File]:
 
 
 @pytest.fixture
-def interview_factory(db_session):
+def interview_factory(db_session) -> Callable[..., Interview]:
     def factory(**kwargs):
         return create_interview(db_session, **kwargs)
 
@@ -166,9 +178,17 @@ def interview_factory(db_session):
 
 
 @pytest.fixture
-def job_factory(db_session: Session):
+def job_factory(db_session: Session) -> Callable[..., Job]:
     def factory(**kwargs):
         return create_job(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def job_event_factory(db_session: Session) -> Callable[..., JobEvent]:
+    def factory(**kwargs):
+        return create_job_event(db_session, **kwargs)
 
     return factory
 
@@ -190,7 +210,7 @@ def tag_factory(db_session: Session) -> Callable[..., Tag]:
 
 
 @pytest.fixture
-def user_factory(db_session):
+def user_factory(db_session) -> Callable[..., User]:
     def factory(**kwargs):
         return create_user(db_session, **kwargs)
 

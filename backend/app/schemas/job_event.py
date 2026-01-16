@@ -1,10 +1,8 @@
-from pydantic import BaseModel
-from app.enums import JobEventType
-from app.schemas import TimestampRead
+from app.enums.job_event_type import JobEventType
+from app.schemas.base import ORMBase, TimestampRead
 
 
-class JobEventBase(BaseModel):
-    job_id: int
+class JobEventBase(ORMBase):
     event_type: JobEventType
     payload: dict | None = None
 
@@ -13,14 +11,11 @@ class JobEventCreate(JobEventBase):
     pass
 
 
-class JobEventUpdate(BaseModel):
-    job_id: int | None = None
+class JobEventUpdate(ORMBase):
     event_type: JobEventType | None = None
     payload: dict | None = None
 
 
 class JobEventRead(JobEventBase, TimestampRead):
     id: int
-
-    class Config:
-        from_attributes = True
+    job_id: int

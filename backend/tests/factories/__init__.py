@@ -4,6 +4,7 @@ from .currency import create_currency
 from .file import create_file
 from .interview import create_interview
 from .job import create_job
+from .job_event import create_job_event
 from .location import create_location
 from .tag import create_tag
 from .user import create_user
@@ -15,6 +16,7 @@ __all__ = [
     "create_file",
     "create_interview",
     "create_job",
+    "create_job_event",
     "create_location",
     "create_tag",
     "create_user",

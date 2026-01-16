@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
-from sqlalchemy import Enum, ForeignKey, JSON, Index
+
+from app.db.base import BaseModel
+from app.enums.job_event_type import JobEventType
+from app.models.mixins import TimestampMixin
+from sqlalchemy import JSON, Enum, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.enums import JobEventType
-from app.models import TimestampMixin
-from app.db import BaseModel
 
 if TYPE_CHECKING:
     from app.models import Job
