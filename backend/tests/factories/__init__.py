@@ -7,6 +7,7 @@ from .job import create_job
 from .job_event import create_job_event
 from .job_file_attachment import create_job_file_attachment
 from .job_status_history import create_job_status_history
+from .job_tag import create_job_tag
 from .location import create_location
 from .tag import create_tag
 from .user import create_user
@@ -21,6 +22,7 @@ __all__ = [
     "create_job_event",
     "create_job_file_attachment",
     "create_job_status_history",
+    "create_job_tag",
     "create_location",
     "create_tag",
     "create_user",

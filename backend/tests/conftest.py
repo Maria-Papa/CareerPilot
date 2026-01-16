@@ -15,6 +15,7 @@ from app.models import (
     JobEvent,
     JobFileAttachment,
     JobStatusHistory,
+    JobTag,
     Location,
     Tag,
     User,
@@ -33,6 +34,7 @@ from tests.factories import (
     create_job_event,
     create_job_file_attachment,
     create_job_status_history,
+    create_job_tag,
     create_location,
     create_tag,
     create_user,
@@ -213,6 +215,14 @@ def job_status_history_factory(
 ) -> Callable[..., JobStatusHistory]:
     def factory(**kwargs):
         return create_job_status_history(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def job_tag_factory(db_session: Session) -> Callable[..., JobTag]:
+    def factory(**kwargs) -> JobTag:
+        return create_job_tag(db_session, **kwargs)
 
     return factory
 

@@ -1,23 +1,19 @@
-from pydantic import BaseModel
-from app.schemas import TimestampRead
+from app.schemas import ORMBase
 
 
-class JobTagBase(BaseModel):
+class JobTagBase(ORMBase):
     job_id: int
     tag_id: int
 
 
-class JobTagCreate(JobTagBase):
-    pass
+class JobTagCreate(ORMBase):
+    tag_id: int
 
 
-class JobTagUpdate(BaseModel):
-    job_id: int | None = None
+class JobTagUpdate(ORMBase):
     tag_id: int | None = None
 
 
-class JobTagRead(JobTagBase, TimestampRead):
-    id: int
-
+class JobTagRead(JobTagBase):
     class Config:
         from_attributes = True
