@@ -7,6 +7,7 @@ from .file import router as file_router
 from .interview import router as interview_router
 from .job import router as jobs_router
 from .location import router as locations_router
+from .tag import router as tags_router
 from .user import router as users_router
 
 router = APIRouter(prefix="/api/v1")
@@ -18,4 +19,5 @@ router.include_router(file_router)
 router.include_router(interview_router)
 router.include_router(jobs_router)
 router.include_router(locations_router)
+router.include_router(tags_router)
 router.include_router(users_router)

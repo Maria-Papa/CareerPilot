@@ -5,6 +5,7 @@ from .file import create_file
 from .interview import create_interview
 from .job import create_job
 from .location import create_location
+from .tag import create_tag
 from .user import create_user
 
 __all__ = [
@@ -15,5 +16,6 @@ __all__ = [
     "create_interview",
     "create_job",
     "create_location",
+    "create_tag",
     "create_user",
 ]

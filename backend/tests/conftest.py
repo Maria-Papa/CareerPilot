@@ -5,7 +5,7 @@ from app.core.errors import EntityNotFoundError
 from app.db.base import Base
 from app.db.session import get_session as real_get_session
 from app.main import create_app
-from app.models import Company, CostOfLiving, Currency, File, Location
+from app.models import Company, CostOfLiving, Currency, File, Location, Tag
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -18,6 +18,7 @@ from tests.factories import (
     create_interview,
     create_job,
     create_location,
+    create_tag,
     create_user,
 )
 
@@ -176,6 +177,14 @@ def job_factory(db_session: Session):
 def location_factory(db_session: Session) -> Callable[..., Location]:
     def factory(**kwargs) -> Location:
         return create_location(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def tag_factory(db_session: Session) -> Callable[..., Tag]:
+    def factory(**kwargs) -> Tag:
+        return create_tag(db_session, **kwargs)
 
     return factory
 
