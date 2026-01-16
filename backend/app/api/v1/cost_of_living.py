@@ -2,6 +2,7 @@ from typing import List
 
 from app.api import get_entity_or_404
 from app.db import get_session
+from app.models.cost_of_living import CostOfLiving
 from app.schemas.cost_of_living import (
     CostOfLivingCreate,
     CostOfLivingRead,
@@ -26,7 +27,7 @@ def list_costs(
 
 
 @router.get("/{col_id}", response_model=CostOfLivingRead)
-def get_cost(col=Depends(get_cost_or_404)):
+def get_cost(col: CostOfLiving = Depends(get_cost_or_404)):
     return col
 
 
@@ -38,13 +39,16 @@ def create_cost(data: CostOfLivingCreate, session: Session = Depends(get_session
 @router.patch("/{col_id}", response_model=CostOfLivingRead)
 def update_cost(
     data: CostOfLivingUpdate,
-    col=Depends(get_cost_or_404),
+    col: CostOfLiving = Depends(get_cost_or_404),
     session: Session = Depends(get_session),
 ):
     return service.update_cost(session, col, data)
 
 
 @router.delete("/{col_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_cost(col=Depends(get_cost_or_404), session: Session = Depends(get_session)):
+def delete_cost(
+    col: CostOfLiving = Depends(get_cost_or_404),
+    session: Session = Depends(get_session),
+):
     service.delete(session, col)
     return None

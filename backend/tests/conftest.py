@@ -5,14 +5,17 @@ from app.core.errors import EntityNotFoundError
 from app.db import get_session as real_get_session
 from app.db.base import Base
 from app.main import create_app
-from app.models import Company
-from app.models.cost_of_living import CostOfLiving
-from app.models.location import Location
+from app.models import Company, CostOfLiving, Currency, Location
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from tests.factories import create_company, create_cost_of_living, create_location
+from tests.factories import (
+    create_company,
+    create_cost_of_living,
+    create_currency,
+    create_location,
+)
 
 TEST_DATABASE_URL = "sqlite:///:memory:"
 
@@ -116,6 +119,14 @@ def company_factory(db_session: Session) -> Callable[..., Company]:
 def cost_of_living_factory(db_session: Session) -> Callable[..., CostOfLiving]:
     def factory(**kwargs) -> CostOfLiving:
         return create_cost_of_living(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def currency_factory(db_session: Session) -> Callable[..., Currency]:
+    def factory(**kwargs) -> Currency:
+        return create_currency(db_session, **kwargs)
 
     return factory
 

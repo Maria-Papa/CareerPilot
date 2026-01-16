@@ -21,6 +21,3 @@ class CompanyUpdate(ORMBase):
 
 class CompanyRead(CompanyBase, TimestampRead, SoftDeleteRead):
     id: int
-
-    class Config:
-        from_attributes = True

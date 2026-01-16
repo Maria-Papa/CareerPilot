@@ -16,15 +16,11 @@ class CostOfLivingService(BaseService[CostOfLiving]):
         super().__init__(repository)
 
     def _ensure_location_exists(self, session: Session, location_id: int):
-        if self.location_repo.get(session, location_id) is None:
+        if self.location_repo.find_one(session, id=location_id) is None:
             raise EntityNotFoundError("Location not found")
 
     def list_costs(
-        self,
-        session: Session,
-        *,
-        offset: int = 0,
-        limit: int = 100,
+        self, session: Session, *, offset: int = 0, limit: int = 100
     ) -> Sequence[CostOfLiving]:
         return self.list(session, offset=offset, limit=limit)
 
@@ -40,10 +36,7 @@ class CostOfLivingService(BaseService[CostOfLiving]):
         return self.create(session, col)
 
     def update_cost(
-        self,
-        session: Session,
-        col: CostOfLiving,
-        data: CostOfLivingUpdate,
+        self, session: Session, col: CostOfLiving, data: CostOfLivingUpdate
     ) -> CostOfLiving:
         if data.location_id is not None:
             self._ensure_location_exists(session, data.location_id)
@@ -52,9 +45,6 @@ class CostOfLivingService(BaseService[CostOfLiving]):
         return self.update(session, col, values)
 
     def adjust_yearly_cost(
-        self,
-        session: Session,
-        col: CostOfLiving,
-        new_cost: int,
+        self, session: Session, col: CostOfLiving, new_cost: int
     ) -> CostOfLiving:
         return self.update(session, col, {"yearly_cost": new_cost})

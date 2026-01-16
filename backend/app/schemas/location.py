@@ -1,8 +1,7 @@
-from pydantic import BaseModel
-from app.schemas import TimestampRead
+from app.schemas.base import ORMBase, TimestampRead
 
 
-class LocationBase(BaseModel):
+class LocationBase(ORMBase):
     name: str
     country_code: str
     currency_id: int
@@ -12,7 +11,7 @@ class LocationCreate(LocationBase):
     pass
 
 
-class LocationUpdate(BaseModel):
+class LocationUpdate(ORMBase):
     name: str | None = None
     country_code: str | None = None
     currency_id: int | None = None
@@ -20,6 +19,3 @@ class LocationUpdate(BaseModel):
 
 class LocationRead(LocationBase, TimestampRead):
     id: int
-
-    class Config:
-        from_attributes = True

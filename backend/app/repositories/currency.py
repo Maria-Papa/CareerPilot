@@ -1,7 +1,7 @@
 from app.models import Currency
-from app.repositories import BaseRepository
+from app.repositories.base import BaseRepository
 
 
 class CurrencyRepository(BaseRepository[Currency]):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(Currency)

@@ -1,23 +1,20 @@
-from pydantic import BaseModel
-from app.schemas import TimestampRead
+from app.schemas.base import ORMBase, TimestampRead
+from pydantic import Field
 
 
-class CurrencyBase(BaseModel):
-    code: str
-    symbol: str | None = None
+class CurrencyBase(ORMBase):
+    code: str = Field(..., min_length=2, max_length=3)
+    symbol: str | None = Field(None, max_length=5)
 
 
 class CurrencyCreate(CurrencyBase):
     pass
 
 
-class CurrencyUpdate(BaseModel):
-    code: str | None = None
-    symbol: str | None = None
+class CurrencyUpdate(ORMBase):
+    code: str | None = Field(None, min_length=2, max_length=3)
+    symbol: str | None = Field(None, max_length=5)
 
 
 class CurrencyRead(CurrencyBase, TimestampRead):
     id: int
-
-    class Config:
-        from_attributes = True
