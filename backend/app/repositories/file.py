@@ -1,5 +1,5 @@
-from app.models import File
-from app.repositories import SoftDeleteBaseRepository
+from app.models.file import File
+from app.repositories.soft_delete_base import SoftDeleteBaseRepository
 
 
 class FileRepository(SoftDeleteBaseRepository[File]):

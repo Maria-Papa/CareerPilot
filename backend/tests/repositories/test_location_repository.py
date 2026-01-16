@@ -1,5 +1,5 @@
 import pytest
-from app.models import Location
+from app.models.location import Location
 from app.repositories.location import LocationRepository
 from sqlalchemy.orm import Session
 

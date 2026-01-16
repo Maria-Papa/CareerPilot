@@ -1,13 +1,15 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 from datetime import datetime
+from typing import TYPE_CHECKING
+
+from app.db.base import BaseModel
+from app.models.mixins import SoftDeleteMixin, TimestampMixin
 from sqlalchemy import Boolean, DateTime, String
-from app.models import TimestampMixin, SoftDeleteMixin
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from app.db import BaseModel
 
 if TYPE_CHECKING:
-    from app.models import Job, File
+    from app.models import File, Job
 
 
 class User(BaseModel, TimestampMixin, SoftDeleteMixin):

@@ -1,5 +1,3 @@
-from typing import List
-
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models.currency import Currency
@@ -11,11 +9,10 @@ from sqlalchemy.orm import Session
 router = APIRouter(prefix="/currencies", tags=["currencies"])
 
 service = CurrencyService()
-
 get_currency_or_404 = get_entity_or_404(service.get_currency)
 
 
-@router.get("", response_model=List[CurrencyRead])
+@router.get("", response_model=list[CurrencyRead])
 def list_currencies(
     offset: int = 0, limit: int = 100, session: Session = Depends(get_session)
 ):

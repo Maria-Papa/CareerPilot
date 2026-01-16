@@ -1,13 +1,15 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
-from sqlalchemy import Enum, Index, String, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db.base import BaseModel
 from app.enums import FileType
-from app.models import TimestampMixin, SoftDeleteMixin
-from app.db import BaseModel
+from app.models.mixins import SoftDeleteMixin, TimestampMixin
+from sqlalchemy import Enum, ForeignKey, Index, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
-    from app.models import User, JobFileAttachment
+    from app.models import JobFileAttachment, User
 
 
 class File(BaseModel, TimestampMixin, SoftDeleteMixin):

@@ -1,5 +1,5 @@
 import pytest
-from app.models import Currency
+from app.models.currency import Currency
 from app.repositories.currency import CurrencyRepository
 from sqlalchemy.orm import Session
 

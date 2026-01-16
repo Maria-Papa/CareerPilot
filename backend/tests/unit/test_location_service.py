@@ -1,8 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
-from app.core.errors import EntityNotFoundError
-from app.models import Location
+from app.models.location import Location
 from app.repositories.location import LocationRepository
 from app.schemas.location import LocationCreate, LocationUpdate
 from app.services.location import LocationService
@@ -12,15 +11,14 @@ pytestmark = pytest.mark.unit
 
 @pytest.fixture
 def repo_mock() -> MagicMock:
-    repo: MagicMock = MagicMock(spec=LocationRepository)
-    return repo
+    """Mocked LocationRepository with spec enforcement."""
+    return MagicMock(spec=LocationRepository)
 
 
 @pytest.fixture
 def service(repo_mock: MagicMock) -> LocationService:
-    service = LocationService()
-    service.repository = repo_mock  # type: ignore[assignment]
-    return service
+    """LocationService instance using the mocked repository."""
+    return LocationService(repository=repo_mock)
 
 
 def test_list_locations(service: LocationService, repo_mock: MagicMock) -> None:

@@ -1,4 +1,4 @@
-from app.models import Currency
+from app.models.currency import Currency
 from app.repositories.base import BaseRepository
 
 

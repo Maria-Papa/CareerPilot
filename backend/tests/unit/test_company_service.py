@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 from app.core.errors import EntityNotFoundError
-from app.models import Company
+from app.models.company import Company
 from app.repositories.company import CompanyRepository
 from app.schemas.company import CompanyCreate, CompanyUpdate
 from app.services.company import CompanyService

@@ -1,5 +1,5 @@
 import pytest
-from app.models import CostOfLiving
+from app.models.cost_of_living import CostOfLiving
 from app.repositories.cost_of_living import CostOfLivingRepository
 from sqlalchemy.orm import Session
 
@@ -7,11 +7,11 @@ pytestmark = pytest.mark.repository
 
 
 @pytest.fixture
-def repo():
+def repo() -> CostOfLivingRepository:
     return CostOfLivingRepository()
 
 
-def test_add_and_get(repo, db_session: Session) -> None:
+def test_add_and_get(repo: CostOfLivingRepository, db_session: Session) -> None:
     col = CostOfLiving(location_id=1, yearly_cost=100000, title="Test")
     added = repo.add(db_session, col)
     assert added.id is not None
@@ -21,7 +21,7 @@ def test_add_and_get(repo, db_session: Session) -> None:
     assert fetched.yearly_cost == 100000
 
 
-def test_get_all(repo, db_session: Session) -> None:
+def test_get_all(repo: CostOfLivingRepository, db_session: Session) -> None:
     repo.add(db_session, CostOfLiving(location_id=1, yearly_cost=100000))
     repo.add(db_session, CostOfLiving(location_id=2, yearly_cost=200000))
 
@@ -29,7 +29,7 @@ def test_get_all(repo, db_session: Session) -> None:
     assert len(all_items) >= 2
 
 
-def test_update(repo, db_session: Session) -> None:
+def test_update(repo: CostOfLivingRepository, db_session: Session) -> None:
     col = CostOfLiving(location_id=1, yearly_cost=100000)
     repo.add(db_session, col)
 
@@ -37,7 +37,7 @@ def test_update(repo, db_session: Session) -> None:
     assert updated.yearly_cost == 150000
 
 
-def test_delete(repo, db_session: Session) -> None:
+def test_delete(repo: CostOfLivingRepository, db_session: Session) -> None:
     col = CostOfLiving(location_id=1, yearly_cost=100000)
     repo.add(db_session, col)
 

@@ -1,4 +1,4 @@
-from app.models import CostOfLiving
+from app.models.cost_of_living import CostOfLiving
 from sqlalchemy.orm import Session
 
 

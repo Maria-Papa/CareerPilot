@@ -10,12 +10,12 @@ from sqlalchemy.orm import Session
 
 
 class CostOfLivingService(BaseService[CostOfLiving]):
-    def __init__(self, repository=None, location_repo=None):
+    def __init__(self, repository=None, location_repo=None) -> None:
         repository = repository or CostOfLivingRepository()
         self.location_repo = location_repo or LocationRepository()
         super().__init__(repository)
 
-    def _ensure_location_exists(self, session: Session, location_id: int):
+    def _ensure_location_exists(self, session: Session, location_id: int) -> None:
         if self.location_repo.find_one(session, id=location_id) is None:
             raise EntityNotFoundError("Location not found")
 

@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 
 class CompanyService(SoftDeleteService[Company]):
-    def __init__(self, repository: CompanyRepository | None = None):
+    def __init__(self, repository: CompanyRepository | None = None) -> None:
         repository = repository or CompanyRepository()
         super().__init__(repository)
 

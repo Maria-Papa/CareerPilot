@@ -9,7 +9,7 @@ def test_create_company_validation_error(client: TestClient) -> None:
     # Missing required field "name"
     payload = {"website": "https://example.com", "industry": "Tech"}
 
-    resp = client.post("/companies", json=payload)
+    resp = client.post("/api/v1/companies", json=payload)
     assert_422(resp)
 
     body = resp.json()

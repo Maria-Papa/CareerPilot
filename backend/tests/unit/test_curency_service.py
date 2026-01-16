@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 import pytest
 from app.core.errors import ConflictError, EntityNotFoundError
-from app.models import Currency
+from app.models.currency import Currency
 from app.repositories.currency import CurrencyRepository
 from app.schemas.currency import CurrencyCreate, CurrencyUpdate
 from app.services.currency import CurrencyService

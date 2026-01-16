@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
-from app.models import CostOfLiving
+from app.models.cost_of_living import CostOfLiving
 from app.repositories.cost_of_living import CostOfLivingRepository
 from app.schemas.cost_of_living import CostOfLivingCreate, CostOfLivingUpdate
 from app.services.cost_of_living import CostOfLivingService

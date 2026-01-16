@@ -1,4 +1,4 @@
-from app.models import Company
+from app.models.company import Company
 from sqlalchemy.orm import Session
 
 

@@ -1,4 +1,4 @@
-from app.models import Location
+from app.models.location import Location
 from sqlalchemy.orm import Session
 
 

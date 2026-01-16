@@ -1,5 +1,5 @@
-from app.models import Location
-from app.repositories import BaseRepository
+from app.models.location import Location
+from app.repositories.base import BaseRepository
 
 
 class LocationRepository(BaseRepository[Location]):

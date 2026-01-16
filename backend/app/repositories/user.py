@@ -1,5 +1,5 @@
-from app.models import User
-from app.repositories import SoftDeleteBaseRepository
+from app.models.user import User
+from app.repositories.soft_delete_base import SoftDeleteBaseRepository
 
 
 class UserRepository(SoftDeleteBaseRepository[User]):

@@ -1,9 +1,8 @@
-from pydantic import BaseModel
 from app.enums import FileType
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 
 
-class FileBase(BaseModel):
+class FileBase(ORMBase):
     user_id: int
     file_url: str
     file_type: FileType
@@ -13,7 +12,7 @@ class FileCreate(FileBase):
     pass
 
 
-class FileUpdate(BaseModel):
+class FileUpdate(ORMBase):
     user_id: int | None = None
     file_url: str | None = None
     file_type: FileType | None = None
@@ -21,6 +20,3 @@ class FileUpdate(BaseModel):
 
 class FileRead(FileBase, TimestampRead, SoftDeleteRead):
     id: int
-
-    class Config:
-        from_attributes = True
