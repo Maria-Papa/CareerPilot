@@ -1,3 +1,4 @@
+import pytest
 from app.enums.job_event_type import JobEventType
 from app.models.job_event import JobEvent
 from app.repositories.job_event import JobEventRepository
@@ -7,10 +8,15 @@ from tests.factories.job import create_job
 from tests.factories.job_event import create_job_event
 from tests.factories.user import create_user
 
+pytestmark = pytest.mark.repository
 
-def test_add_and_get_job_event(db_session: Session):
-    repo = JobEventRepository()
 
+@pytest.fixture
+def repo() -> JobEventRepository:
+    return JobEventRepository()
+
+
+def test_add_and_get_job_event(repo: JobEventRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -23,9 +29,7 @@ def test_add_and_get_job_event(db_session: Session):
     assert fetched.id == created.id
 
 
-def test_get_all_job_events(db_session: Session):
-    repo = JobEventRepository()
-
+def test_get_all_job_events(repo: JobEventRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -37,9 +41,7 @@ def test_get_all_job_events(db_session: Session):
     assert len(events) == 2
 
 
-def test_update_job_event(db_session: Session):
-    repo = JobEventRepository()
-
+def test_update_job_event(repo: JobEventRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -50,9 +52,7 @@ def test_update_job_event(db_session: Session):
     assert updated.payload == {"x": 1}
 
 
-def test_delete_job_event(db_session: Session):
-    repo = JobEventRepository()
-
+def test_delete_job_event(repo: JobEventRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)

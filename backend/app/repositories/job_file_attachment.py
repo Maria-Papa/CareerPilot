@@ -1,8 +1,5 @@
-from datetime import datetime, timezone
-from sqlalchemy.orm import Session
-
-from app.models import JobFileAttachment
-from app.repositories import SoftDeleteBaseRepository
+from app.models.job_file_attachment import JobFileAttachment
+from app.repositories.soft_delete_base import SoftDeleteBaseRepository
 
 
 class JobFileAttachmentRepository(SoftDeleteBaseRepository[JobFileAttachment]):

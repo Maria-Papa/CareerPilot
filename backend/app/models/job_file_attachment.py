@@ -1,21 +1,23 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 from datetime import datetime
+from typing import TYPE_CHECKING
+
+from app.db.base import BaseModel
+from app.models.mixins import SoftDeleteMixin
 from sqlalchemy import (
     Boolean,
+    DateTime,
+    ForeignKey,
     Index,
     Integer,
-    ForeignKey,
-    DateTime,
     UniqueConstraint,
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
-from app.db import BaseModel
-from app.models import SoftDeleteMixin
 
 if TYPE_CHECKING:
-    from app.models import Job, File
+    from app.models import File, Job
 
 
 class JobFileAttachment(BaseModel, SoftDeleteMixin):
@@ -27,15 +29,28 @@ class JobFileAttachment(BaseModel, SoftDeleteMixin):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     job_id: Mapped[int] = mapped_column(
-        ForeignKey("jobs.id", ondelete="CASCADE"), index=True
+        ForeignKey("jobs.id", ondelete="CASCADE"),
+        index=True,
     )
     file_id: Mapped[int] = mapped_column(ForeignKey("files.id"))
+
     version: Mapped[int] = mapped_column(Integer)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+
     attached_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
+        DateTime(timezone=True),
+        server_default=func.now(),
     )
     detached_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+    )
 
     job: Mapped["Job"] = relationship(back_populates="attachments")
     file: Mapped["File"] = relationship(back_populates="attachments")

@@ -13,6 +13,7 @@ from app.models import (
     Interview,
     Job,
     JobEvent,
+    JobFileAttachment,
     Location,
     Tag,
     User,
@@ -29,6 +30,7 @@ from tests.factories import (
     create_interview,
     create_job,
     create_job_event,
+    create_job_file_attachment,
     create_location,
     create_tag,
     create_user,
@@ -189,6 +191,16 @@ def job_factory(db_session: Session) -> Callable[..., Job]:
 def job_event_factory(db_session: Session) -> Callable[..., JobEvent]:
     def factory(**kwargs):
         return create_job_event(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def job_file_attachment_factory(
+    db_session: Session,
+) -> Callable[..., JobFileAttachment]:
+    def factory(**kwargs):
+        return create_job_file_attachment(db_session, **kwargs)
 
     return factory
 

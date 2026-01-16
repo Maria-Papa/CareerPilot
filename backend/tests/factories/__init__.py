@@ -5,6 +5,7 @@ from .file import create_file
 from .interview import create_interview
 from .job import create_job
 from .job_event import create_job_event
+from .job_file_attachment import create_job_file_attachment
 from .location import create_location
 from .tag import create_tag
 from .user import create_user
@@ -17,6 +18,7 @@ __all__ = [
     "create_interview",
     "create_job",
     "create_job_event",
+    "create_job_file_attachment",
     "create_location",
     "create_tag",
     "create_user",
