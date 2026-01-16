@@ -8,6 +8,7 @@ from .interview import router as interview_router
 from .job import router as jobs_router
 from .job_event import router as job_event_router
 from .job_file_attachment import router as job_file_attachment_router
+from .job_status_history import router as job_status_history_router
 from .location import router as locations_router
 from .tag import router as tags_router
 from .user import router as users_router
@@ -22,6 +23,7 @@ router.include_router(interview_router)
 router.include_router(jobs_router)
 router.include_router(job_event_router)
 router.include_router(job_file_attachment_router)
+router.include_router(job_status_history_router)
 router.include_router(locations_router)
 router.include_router(tags_router)
 router.include_router(users_router)

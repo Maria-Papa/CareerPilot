@@ -1,10 +1,8 @@
-from pydantic import BaseModel
-from app.enums import JobStatus
-from app.schemas import TimestampRead
+from app.enums.job_status import JobStatus
+from app.schemas import ORMBase, TimestampRead
 
 
-class JobStatusHistoryBase(BaseModel):
-    job_id: int
+class JobStatusHistoryBase(ORMBase):
     status: JobStatus
 
 
@@ -12,13 +10,10 @@ class JobStatusHistoryCreate(JobStatusHistoryBase):
     pass
 
 
-class JobStatusHistoryUpdate(BaseModel):
-    job_id: int | None = None
+class JobStatusHistoryUpdate(ORMBase):
     status: JobStatus | None = None
 
 
 class JobStatusHistoryRead(JobStatusHistoryBase, TimestampRead):
     id: int
-
-    class Config:
-        from_attributes = True
+    job_id: int
