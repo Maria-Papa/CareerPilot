@@ -1,29 +1,31 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
+
+from app.db.base import BaseModel
+from app.enums import EmploymentType, FlexibilityType, JobStatus
+from app.models.mixins import SoftDeleteMixin, TimestampMixin
 from sqlalchemy import (
     Enum,
-    Index,
-    String,
-    Integer,
     ForeignKey,
+    Index,
+    Integer,
+    String,
     Text,
 )
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
-from app.enums import EmploymentType, FlexibilityType, JobStatus
-from app.models import TimestampMixin, SoftDeleteMixin
-from app.db import BaseModel
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models import (
         Company,
-        Location,
-        User,
         Interview,
         JobEvent,
         JobFileAttachment,
-        JobTag,
         JobStatusHistory,
+        JobTag,
+        Location,
+        User,
     )
 
 
@@ -111,3 +113,6 @@ class Job(BaseModel, TimestampMixin, SoftDeleteMixin):
             f"Job(id={self.id!r}, user_id={self.user_id!r}, company_id={self.company_id!r}, "
             f"title={self.title!r}, current_status={self.current_status!r})"
         )
+
+    def set_status(self, new_status: JobStatus) -> None:
+        self.current_status = new_status

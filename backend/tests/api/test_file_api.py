@@ -1,6 +1,6 @@
 from typing import Callable
 
-from app.enums import FileType
+from app.enums.file_type import FileType
 from app.models.file import File
 from app.models.user import User
 from fastapi.testclient import TestClient

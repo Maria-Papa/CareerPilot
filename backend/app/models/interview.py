@@ -1,11 +1,13 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 from datetime import datetime
-from sqlalchemy import Enum, ForeignKey, DateTime, Index, Text
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from typing import TYPE_CHECKING
+
+from app.db.base import BaseModel
 from app.enums import InterviewOutcome, InterviewType
-from app.models import TimestampMixin
-from app.db import BaseModel
+from app.models.mixins import TimestampMixin
+from sqlalchemy import DateTime, Enum, ForeignKey, Index, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models import Job

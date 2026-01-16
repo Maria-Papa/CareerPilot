@@ -1,11 +1,10 @@
 from datetime import datetime
-from pydantic import BaseModel
-from app.enums import InterviewType, InterviewOutcome
-from app.schemas import TimestampRead
+
+from app.enums import InterviewOutcome, InterviewType
+from app.schemas.base import ORMBase, TimestampRead
 
 
-class InterviewBase(BaseModel):
-    job_id: int
+class InterviewBase(ORMBase):
     interview_type: InterviewType
     scheduled_at: datetime | None = None
     outcome: InterviewOutcome | None = None
@@ -16,8 +15,7 @@ class InterviewCreate(InterviewBase):
     pass
 
 
-class InterviewUpdate(BaseModel):
-    job_id: int | None = None
+class InterviewUpdate(ORMBase):
     interview_type: InterviewType | None = None
     scheduled_at: datetime | None = None
     outcome: InterviewOutcome | None = None
@@ -26,6 +24,4 @@ class InterviewUpdate(BaseModel):
 
 class InterviewRead(InterviewBase, TimestampRead):
     id: int
-
-    class Config:
-        from_attributes = True
+    job_id: int

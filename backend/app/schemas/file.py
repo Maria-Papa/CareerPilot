@@ -1,4 +1,4 @@
-from app.enums import FileType
+from app.enums.file_type import FileType
 from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 
 

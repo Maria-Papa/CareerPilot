@@ -15,7 +15,8 @@ class FileService(SoftDeleteService[File]):
         repository: FileRepository | None = None,
         user_repo: UserRepository | None = None,
     ) -> None:
-        super().__init__(repository or FileRepository())
+        repository = repository or FileRepository()
+        super().__init__(repository)
         self.user_repo = user_repo or UserRepository()
 
     def _validate_user(self, session: Session, user_id: int) -> None:

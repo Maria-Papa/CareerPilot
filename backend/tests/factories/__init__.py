@@ -2,6 +2,8 @@ from .company import create_company
 from .cost_of_living import create_cost_of_living
 from .currency import create_currency
 from .file import create_file
+from .interview import create_interview
+from .job import create_job
 from .location import create_location
 from .user import create_user
 
@@ -10,6 +12,8 @@ __all__ = [
     "create_cost_of_living",
     "create_currency",
     "create_file",
+    "create_interview",
+    "create_job",
     "create_location",
     "create_user",
 ]

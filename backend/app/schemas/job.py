@@ -1,9 +1,8 @@
-from pydantic import BaseModel
 from app.enums import EmploymentType, FlexibilityType, JobStatus
-from app.schemas import TimestampRead, SoftDeleteRead
+from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 
 
-class JobBase(BaseModel):
+class JobBase(ORMBase):
     user_id: int
     company_id: int
     location_id: int | None = None
@@ -23,7 +22,7 @@ class JobCreate(JobBase):
     pass
 
 
-class JobUpdate(BaseModel):
+class JobUpdate(ORMBase):
     user_id: int | None = None
     company_id: int | None = None
     location_id: int | None = None
@@ -41,6 +40,3 @@ class JobUpdate(BaseModel):
 
 class JobRead(JobBase, TimestampRead, SoftDeleteRead):
     id: int
-
-    class Config:
-        from_attributes = True

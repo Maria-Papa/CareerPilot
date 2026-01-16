@@ -2,8 +2,8 @@ from typing import Callable, Generator
 
 import pytest
 from app.core.errors import EntityNotFoundError
-from app.db import get_session as real_get_session
 from app.db.base import Base
+from app.db.session import get_session as real_get_session
 from app.main import create_app
 from app.models import Company, CostOfLiving, Currency, File, Location
 from fastapi import FastAPI
@@ -15,6 +15,8 @@ from tests.factories import (
     create_cost_of_living,
     create_currency,
     create_file,
+    create_interview,
+    create_job,
     create_location,
     create_user,
 )
@@ -80,14 +82,27 @@ def app(db_session: Session) -> Generator[FastAPI, None, None]:
     """
     app = create_app()
 
+    # --- DB override ---
     def override_get_session():
         try:
             yield db_session
         finally:
             pass
 
-    # Override the dependency used by the routers
     app.dependency_overrides[real_get_session] = override_get_session
+
+    # --- AUTH override (test-only) ---
+    from app.api.deps import get_current_user
+    from app.models.user import User
+
+    def override_current_user():
+        # Always return the first user in the test DB
+        user = db_session.query(User).first()
+        if not user:
+            raise Exception("No test user found. Create one with user_factory().")
+        return user
+
+    app.dependency_overrides[get_current_user] = override_current_user
 
     # Ensure the EntityNotFoundError handler is registered
     handler = app.exception_handlers.get(EntityNotFoundError)
@@ -137,6 +152,22 @@ def currency_factory(db_session: Session) -> Callable[..., Currency]:
 def file_factory(db_session: Session) -> Callable[..., File]:
     def factory(**kwargs) -> File:
         return create_file(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def interview_factory(db_session):
+    def factory(**kwargs):
+        return create_interview(db_session, **kwargs)
+
+    return factory
+
+
+@pytest.fixture
+def job_factory(db_session: Session):
+    def factory(**kwargs):
+        return create_job(db_session, **kwargs)
 
     return factory
 
