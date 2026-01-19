@@ -33,6 +33,10 @@ project-contents.txt
 /manifests
 manifest*.txt
 Progress.md
+module-export.txt
+/scripts
+refactor_instructions.md
+staged_changes.txt
 
 # Ignore any local environment overrides
 .env
