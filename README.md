@@ -19,7 +19,7 @@ This repository is intentionally public **before an MVP exists** to demonstrate 
 
 This project is in **early development**.
 
-- There is no MVP yet
+- No MVP yet
 - Features and APIs are incomplete
 - Documentation may describe *planned* behavior
 
@@ -27,7 +27,8 @@ The current value of the repository is architectural clarity and design intent, 
 
 ## Project Progress
 
-Detailed mvp implementation progress is tracked in [`docs/progress/mvp_progress.md`](docs/progress/mvp_progress.md).
+Detailed MVP implementation progress is tracked in
+[`docs/progress/mvp_progress.md`](docs/progress/mvp_progress.md).
 
 ## Why This Project Exists
 
@@ -48,10 +49,10 @@ CareerPilot treats job hunting as **structured data**, focusing on:
 
 If you are reviewing this as an interviewer or engineer:
 
-1. Start with the high-level README (this file)
+1. Start with this README
 2. Read the architecture overview in [`docs/architecture.md`](docs/architecture.md)
-3. Browse the ADRs in [`docs/adr/`](docs/adr/) to understand trade-offs
-4. Skim the [`docs/public_api_contract.md`](docs/public_api_contract.md) to see how the system is intended to be consumed
+3. Browse the ADRs in [`docs/adr/`](docs/adr/)
+4. Skim [`docs/public_api_contract.md`](docs/public_api_contract.md) to understand API intent
 
 Code will evolve; **architecture and intent are already stable**.
 
@@ -79,7 +80,7 @@ Code will evolve; **architecture and intent are already stable**.
 
 ## Architecture Snapshot
 
-CareerPilot follows an **API-first, layered modular monolith**.
+CareerPilot follows an **API-first, layered modular monolith**:
 
 ```text
 Routes → Services → Repositories → Domain Models
@@ -89,7 +90,7 @@ Key characteristics:
 
 - strict separation of concerns
 - business logic isolated from frameworks
-- decisions documented via Architectural Decision Records (ADRs)
+- decisions documented via ADRs
 
 ## Technology Stack
 
@@ -114,21 +115,23 @@ Key characteristics:
 
 ## Documentation
 
-Documentation is treated as a first-class artifact.
+Documentation is treated as a first-class artifact:
 
-- [`docs/architecture.md`](docs/architecture.md) – system overview and layering
+- [`docs/architecture.md`](docs/architecture.md) – system overview
 - [`docs/adr/`](docs/adr/) – architectural decision records
-- [`docs/public_api_contract.md`](docs/public_api_contract.md) – API guarantees and stability rules
-- [`docs/openapi.v1.yml`](docs/openapi.v1.yml) – machine-readable API specification
-- [`docs/api_evolution.md`](docs/api_evolution.md) – versioning and deprecation strategy
+- [`docs/public_api_contract.md`](docs/public_api_contract.md) – API guarantees
+- [`docs/openapi.v1.yml`](docs/openapi.v1.yml) – machine-readable API spec
+- [`docs/api_evolution.md`](docs/api_evolution.md) – versioning strategy
 
-## Development Setup (Early)
+## Development Setup
 
 Requirements:
 
 - Docker & Docker Compose
 - Python 3.11
 - Node.js 20+
+
+Clone and start the stack:
 
 ```bash
 git clone https://github.com/Maria-Papa/CareerPilot.git
@@ -141,7 +144,33 @@ Local ports:
 - Frontend: <http://localhost:3000>
 - Backend: <http://localhost:8000>
 
+## Pre‑commit Hooks
+
 ## Roadmap (High Level)
+
+This project uses **pre‑commit** to enforce formatting, linting, typing, and security checks.
+
+Install hooks (required once):
+
+```bash
+pre-commit install
+```
+
+Run all checks manually:
+
+```bash
+pre-commit run --all-files
+```
+
+## Maintainers: Tooling Commands
+
+These commands are not required for contributors, but useful when updating tooling:
+
+```bash
+pre-commit autoupdate
+pre-commit clean
+pre-commit run --all-files
+```
 
 ### Version 1.0 – MVP
 

@@ -1,0 +1,32 @@
+name: Commitlint
+
+on:
+  push:
+    branches:
+      - master
+      - main
+      - '**'
+
+jobs:
+  commitlint:
+    name: Lint commits
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install commitlint
+        run: |
+          npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+      - name: Run commitlint on recent commits
+        run: |
+          npx commitlint --from=HEAD~10 --to=HEAD

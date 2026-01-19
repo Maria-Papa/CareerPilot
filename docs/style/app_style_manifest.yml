@@ -4,6 +4,7 @@ APP_STYLE_MANIFEST:
   git_commit_style:
     convention: "Conventional Commits"
     format: "<type>(<scope>): short imperative summary"
+
     subject_rules:
       tense: "present"
       max_length: 72
@@ -16,7 +17,7 @@ APP_STYLE_MANIFEST:
       refactor: "Code change without behavior change"
       docs: "Documentation only"
       test: "Adding or updating tests"
-      chore: "Tooling, config, or maintenance"
+      chore: "Tooling, config, maintenance, or developer experience"
 
     recommended_scopes:
       architecture:
@@ -25,7 +26,10 @@ APP_STYLE_MANIFEST:
         - api
         - infra
         - style
+        - tooling
+        - ci
         - adr
+
       domain:
         - jobs
         - interviews
@@ -33,6 +37,7 @@ APP_STYLE_MANIFEST:
         - auth
         - users
         - companies
+
       persistence:
         - models
         - enums
@@ -47,12 +52,8 @@ APP_STYLE_MANIFEST:
       - "ADR commits should reference ADR number in scope, e.g., docs(adr-005): clarify repository responsibilities"
 
     body_rules:
-      sections:
-        - Context
-        - Changes
-        - Notes
       bullet_style: "-"
       tone: "clear, concise, professional"
-      intent: "Explain why, not implementation details"
+      intent: "Explain why the change exists, not implementation details"
 
 END_STYLE_MANIFEST
