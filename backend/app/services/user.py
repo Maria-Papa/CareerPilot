@@ -1,11 +1,12 @@
 from typing import Sequence
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import ConflictError, EntityNotFoundError
 from app.models import User
 from app.repositories.user import UserRepository
 from app.schemas import UserCreate, UserUpdate
 from app.services.soft_delete_base import SoftDeleteService
-from sqlalchemy.orm import Session
 
 
 class UserService(SoftDeleteService[User]):
@@ -13,9 +14,7 @@ class UserService(SoftDeleteService[User]):
         repository = repository or UserRepository()
         super().__init__(repository)
 
-    def list_users(
-        self, session: Session, *, offset: int = 0, limit: int = 100
-    ) -> Sequence[User]:
+    def list_users(self, session: Session, *, offset: int = 0, limit: int = 100) -> Sequence[User]:
         return self.list(session, offset=offset, limit=limit)
 
     def get_user(self, session: Session, user_id: int) -> User:

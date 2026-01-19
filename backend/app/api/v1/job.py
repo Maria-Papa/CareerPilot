@@ -1,12 +1,11 @@
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_current_user, get_session
-from app.db.session import get_session
 from app.enums.job_status import JobStatus
-from app.models.job import Job
 from app.models.user import User
 from app.schemas.job import JobCreate, JobRead, JobUpdate
 from app.services.job import JobService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 

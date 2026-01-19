@@ -1,0 +1,61 @@
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+exclude = '''
+/(
+    \.venv
+  | \.pytest_cache
+  | __pycache__
+  | htmlcov
+)/
+'''
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+exclude = [
+    ".venv",
+    "__pycache__",
+    ".pytest_cache",
+    "htmlcov",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = []
+
+[tool.mypy]
+python_version = "3.11"
+plugins = ["sqlalchemy.ext.mypy.plugin"]
+ignore_missing_imports = false
+strict = false
+explicit_package_bases = true
+exclude = [
+    "\\.venv",
+    "\\.pytest_cache",
+    "htmlcov",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra --disable-warnings"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+omit = [
+    "tests/*",
+    ".venv/*",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.bandit]
+exclude_dirs = [".venv", "tests", "htmlcov"]
+skips = ["B101"]
+
+[tool.pip-audit]
+require-hashes = false

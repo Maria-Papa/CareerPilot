@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 from pydantic import EmailStr
+
+from app.schemas.base import ORMBase, SoftDeleteRead, TimestampRead
 
 
 class UserBase(ORMBase):

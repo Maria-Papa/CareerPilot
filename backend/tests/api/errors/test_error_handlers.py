@@ -12,7 +12,8 @@ pytestmark = pytest.mark.integration
 def test_entity_not_found_handler(client: TestClient) -> None:
     app = cast(FastAPI, client.app)
 
-    raise_error = lambda: (_ for _ in ()).throw(EntityNotFoundError("missing"))
+    def raise_error() -> None:
+        (_ for _ in ()).throw(EntityNotFoundError("missing"))
 
     @app.get("/force404")
     def force():

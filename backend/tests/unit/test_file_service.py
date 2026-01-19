@@ -68,9 +68,7 @@ def test_update_file(service: FileService, repo_mock: MagicMock) -> None:
     file = File(id=1, user_id=1, file_url="old", file_type=FileType.CV)
     data = FileUpdate(file_url="new")
 
-    repo_mock.update.return_value = File(
-        id=1, user_id=1, file_url="new", file_type=FileType.CV
-    )
+    repo_mock.update.return_value = File(id=1, user_id=1, file_url="new", file_type=FileType.CV)
 
     result = service.update_file(session, file, data)
     repo_mock.update.assert_called_once()

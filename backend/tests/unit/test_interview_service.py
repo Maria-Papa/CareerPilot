@@ -28,9 +28,7 @@ def service(repo_mock: MagicMock, job_repo_mock: MagicMock) -> InterviewService:
     return InterviewService(repository=repo_mock, job_repo=job_repo_mock)
 
 
-def test_create_interview_success(
-    service: InterviewService, repo_mock: MagicMock, job_repo_mock: MagicMock
-) -> None:
+def test_create_interview_success(service: InterviewService, repo_mock: MagicMock, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     job_repo_mock.get.return_value = object()
 
@@ -48,9 +46,7 @@ def test_create_interview_success(
     assert result is interview
 
 
-def test_create_interview_job_not_found(
-    service: InterviewService, job_repo_mock: MagicMock
-) -> None:
+def test_create_interview_job_not_found(service: InterviewService, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     job_repo_mock.get.return_value = None
 
@@ -65,16 +61,12 @@ def test_create_interview_job_not_found(
         service.create_interview(session, job_id=999, data=data)
 
 
-def test_update_interview_valid(
-    service: InterviewService, repo_mock: MagicMock, job_repo_mock: MagicMock
-) -> None:
+def test_update_interview_valid(service: InterviewService, repo_mock: MagicMock, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     interview = Interview(id=1, job_id=1, interview_type=InterviewType.HR_SCREEN)
 
     data = InterviewUpdate(notes="Updated notes")
-    updated = Interview(
-        id=1, job_id=1, interview_type=InterviewType.HR_SCREEN, notes="Updated notes"
-    )
+    updated = Interview(id=1, job_id=1, interview_type=InterviewType.HR_SCREEN, notes="Updated notes")
     repo_mock.update.return_value = updated
 
     result = service.update_interview(session, interview, data)

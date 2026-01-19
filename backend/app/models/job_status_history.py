@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from sqlalchemy import Enum, ForeignKey, Index
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.base import BaseModel
 from app.enums.job_status import JobStatus
 from app.models.mixins import TimestampMixin
-from sqlalchemy import Enum, ForeignKey, Index
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models import Job
@@ -14,14 +15,10 @@ if TYPE_CHECKING:
 
 class JobStatusHistory(BaseModel, TimestampMixin):
     __tablename__ = "job_status_history"
-    __table_args__ = (
-        Index("idx_job_status_history_job_id_created_at", "job_id", "created_at"),
-    )
+    __table_args__ = (Index("idx_job_status_history_job_id_created_at", "job_id", "created_at"),)
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    job_id: Mapped[int] = mapped_column(
-        ForeignKey("jobs.id", ondelete="CASCADE"), index=True
-    )
+    job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"), index=True)
     status: Mapped[JobStatus] = mapped_column(
         Enum(
             JobStatus,
@@ -35,7 +32,4 @@ class JobStatusHistory(BaseModel, TimestampMixin):
     job: Mapped["Job"] = relationship(back_populates="status_history")
 
     def __repr__(self) -> str:
-        return (
-            f"JobStatusHistory(id={self.id!r}, job_id={self.job_id!r}, "
-            f"status={self.status!r})"
-        )
+        return f"JobStatusHistory(id={self.id!r}, job_id={self.job_id!r}, " f"status={self.status!r})"

@@ -1,10 +1,11 @@
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models import File
 from app.schemas import FileCreate, FileRead, FileUpdate
 from app.services.file import FileService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/files", tags=["files"])
 
@@ -14,9 +15,7 @@ get_active_file_or_404 = get_entity_or_404(service.get_including_deleted)
 
 
 @router.get("", response_model=list[FileRead])
-def list_files(
-    offset: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
+def list_files(offset: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return service.list(session, offset=offset, limit=limit)
 
 

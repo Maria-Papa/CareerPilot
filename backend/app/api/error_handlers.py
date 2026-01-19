@@ -1,10 +1,6 @@
-from app.core import (
-    AccessDeniedError,
-    ConflictError,
-    EntityNotFoundError,
-    InvalidStateTransitionError,
-)
 from fastapi import HTTPException, status
+
+from app.core import AccessDeniedError, ConflictError, EntityNotFoundError, InvalidStateTransitionError
 
 
 def raise_http_error(exc: Exception) -> None:
@@ -21,6 +17,4 @@ def raise_http_error(exc: Exception) -> None:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(exc))
 
     # Fallback for unexpected domain errors
-    raise HTTPException(
-        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unexpected error"
-    )
+    raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Unexpected error")

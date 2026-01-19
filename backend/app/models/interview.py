@@ -3,11 +3,12 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+from sqlalchemy import DateTime, Enum, ForeignKey, Index, Text
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.base import BaseModel
 from app.enums import InterviewOutcome, InterviewType
 from app.models.mixins import TimestampMixin
-from sqlalchemy import DateTime, Enum, ForeignKey, Index, Text
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models import Job
@@ -21,9 +22,7 @@ class Interview(BaseModel, TimestampMixin):
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    job_id: Mapped[int] = mapped_column(
-        ForeignKey("jobs.id", ondelete="CASCADE"), index=True
-    )
+    job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"), index=True)
     interview_type: Mapped[InterviewType] = mapped_column(
         Enum(
             InterviewType,

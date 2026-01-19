@@ -1,9 +1,10 @@
 from typing import Generic, Sequence, TypeVar
 
+from sqlalchemy.orm import Session
+
 from app.db.base import BaseModel
 from app.repositories.base import BaseRepository
 from app.repositories.soft_delete_base import SoftDeleteBaseRepository
-from sqlalchemy.orm import Session
 
 ModelType = TypeVar("ModelType", bound=BaseModel)
 
@@ -17,9 +18,7 @@ class BaseService(Generic[ModelType]):
     def get(self, session: Session, id: int) -> ModelType | None:
         return self.repository.get(session, id)
 
-    def list(
-        self, session: Session, *, offset: int = 0, limit: int = 100
-    ) -> Sequence[ModelType]:
+    def list(self, session: Session, *, offset: int = 0, limit: int = 100) -> Sequence[ModelType]:
         return self.repository.get_all(session, offset=offset, limit=limit)
 
     def find(self, session: Session, **filters) -> Sequence[ModelType]:
@@ -44,6 +43,4 @@ class BaseService(Generic[ModelType]):
         if isinstance(self.repository, SoftDeleteBaseRepository):
             self.repository.restore(session, instance)
         else:
-            raise AttributeError(
-                f"Restore is not supported for {type(instance).__name__}"
-            )
+            raise AttributeError(f"Restore is not supported for {type(instance).__name__}")

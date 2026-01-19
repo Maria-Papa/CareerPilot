@@ -23,12 +23,8 @@ def service(repo_mock: MagicMock) -> UserService:
 def test_list_users(service: UserService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     repo_mock.get_all.return_value = [
-        User(
-            id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False
-        ),
-        User(
-            id=2, email="c@d.com", password_hash="y", is_active=True, is_verified=True
-        ),
+        User(id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False),
+        User(id=2, email="c@d.com", password_hash="y", is_active=True, is_verified=True),
     ]
 
     result = service.list(session)
@@ -39,9 +35,7 @@ def test_list_users(service: UserService, repo_mock: MagicMock) -> None:
 
 def test_get_user_success(service: UserService, repo_mock: MagicMock) -> None:
     session = MagicMock()
-    user = User(
-        id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False
-    )
+    user = User(id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False)
     repo_mock.get.return_value = user
 
     result = service.get_user(session, 1)
@@ -59,12 +53,8 @@ def test_get_user_not_found(service: UserService, repo_mock: MagicMock) -> None:
 
 def test_create_user(service: UserService, repo_mock: MagicMock) -> None:
     session = MagicMock()
-    data = UserCreate(
-        email="a@b.com", password="pwd", is_active=True, is_verified=False
-    )
-    created = User(
-        id=10, email="a@b.com", password_hash="pwd", is_active=True, is_verified=False
-    )
+    data = UserCreate(email="a@b.com", password="pwd", is_active=True, is_verified=False)
+    created = User(id=10, email="a@b.com", password_hash="pwd", is_active=True, is_verified=False)
 
     repo_mock.find_one.return_value = None
     repo_mock.add.return_value = created
@@ -78,9 +68,7 @@ def test_create_user(service: UserService, repo_mock: MagicMock) -> None:
 
 def test_create_user_conflict(service: UserService, repo_mock: MagicMock) -> None:
     session = MagicMock()
-    data = UserCreate(
-        email="a@b.com", password="pwd", is_active=True, is_verified=False
-    )
+    data = UserCreate(email="a@b.com", password="pwd", is_active=True, is_verified=False)
 
     repo_mock.find_one.return_value = User(
         id=1, email="a@b.com", password_hash="pwd", is_active=True, is_verified=False
@@ -92,14 +80,10 @@ def test_create_user_conflict(service: UserService, repo_mock: MagicMock) -> Non
 
 def test_update_user(service: UserService, repo_mock: MagicMock) -> None:
     session = MagicMock()
-    user = User(
-        id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False
-    )
+    user = User(id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=False)
     data = UserUpdate(is_verified=True)
 
-    repo_mock.update.return_value = User(
-        id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=True
-    )
+    repo_mock.update.return_value = User(id=1, email="a@b.com", password_hash="x", is_active=True, is_verified=True)
 
     result = service.update_user(session, user, data)
 

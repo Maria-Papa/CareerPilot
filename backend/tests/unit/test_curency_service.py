@@ -68,9 +68,7 @@ def test_create_currency(service: CurrencyService, repo_mock: MagicMock) -> None
     assert result.id == 10
 
 
-def test_create_currency_conflict(
-    service: CurrencyService, repo_mock: MagicMock
-) -> None:
+def test_create_currency_conflict(service: CurrencyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     data = CurrencyCreate(code="EUR", symbol="€")
 

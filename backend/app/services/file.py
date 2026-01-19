@@ -1,12 +1,13 @@
 from typing import Sequence
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError
 from app.models import File
 from app.repositories.file import FileRepository
 from app.repositories.user import UserRepository
 from app.schemas import FileCreate, FileUpdate
 from app.services.soft_delete_base import SoftDeleteService
-from sqlalchemy.orm import Session
 
 
 class FileService(SoftDeleteService[File]):
@@ -23,9 +24,7 @@ class FileService(SoftDeleteService[File]):
         if self.user_repo.get(session, user_id) is None:
             raise EntityNotFoundError("User not found")
 
-    def list_user_files(
-        self, session: Session, user_id: int, *, offset: int = 0, limit: int = 100
-    ) -> Sequence[File]:
+    def list_user_files(self, session: Session, user_id: int, *, offset: int = 0, limit: int = 100) -> Sequence[File]:
         self._validate_user(session, user_id)
         files = self.find(session, user_id=user_id)
         return files[offset : offset + limit]

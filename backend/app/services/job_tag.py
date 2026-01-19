@@ -1,11 +1,12 @@
 from typing import cast
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError
 from app.models import JobTag
 from app.repositories import JobRepository, JobTagRepository, TagRepository
 from app.schemas import JobTagCreate, JobTagUpdate
 from app.services import BaseService
-from sqlalchemy.orm import Session
 
 
 class JobTagService(BaseService[JobTag]):

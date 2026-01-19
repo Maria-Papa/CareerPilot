@@ -1,5 +1,6 @@
-from app.schemas.base import ORMBase, TimestampRead
 from pydantic import Field
+
+from app.schemas.base import ORMBase, TimestampRead
 
 
 class CurrencyBase(ORMBase):

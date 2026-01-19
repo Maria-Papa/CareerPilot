@@ -1,11 +1,12 @@
 from typing import cast
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError
 from app.models.job_status_history import JobStatusHistory
 from app.repositories import JobRepository, JobStatusHistoryRepository
 from app.schemas import JobStatusHistoryCreate, JobStatusHistoryUpdate
 from app.services.base import BaseService
-from sqlalchemy.orm import Session
 
 
 class JobStatusHistoryService(BaseService[JobStatusHistory]):
@@ -26,9 +27,7 @@ class JobStatusHistoryService(BaseService[JobStatusHistory]):
         if self._job_repo.get(session, job_id) is None:
             raise EntityNotFoundError("Job not found")
 
-    def create_history(
-        self, session: Session, job_id: int, data: JobStatusHistoryCreate
-    ) -> JobStatusHistory:
+    def create_history(self, session: Session, job_id: int, data: JobStatusHistoryCreate) -> JobStatusHistory:
         self._validate_job(session, job_id)
         history = JobStatusHistory(job_id=job_id, **data.model_dump())
         return self.create(session, history)

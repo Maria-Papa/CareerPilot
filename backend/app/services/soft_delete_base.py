@@ -1,9 +1,10 @@
 from typing import Generic, TypeVar, cast
 
+from sqlalchemy.orm import Session
+
 from app.db.base import BaseModel
 from app.repositories.soft_delete_base import SoftDeleteBaseRepository
 from app.services.base import BaseService
-from sqlalchemy.orm import Session
 
 T = TypeVar("T", bound=BaseModel)
 

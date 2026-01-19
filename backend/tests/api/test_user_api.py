@@ -2,7 +2,6 @@ from typing import Any, Callable
 
 import pytest
 from app.models.user import User
-from app.schemas.user import UserCreate
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 from tests.utils.api_assertions import assert_404, assert_list, assert_status

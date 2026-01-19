@@ -3,18 +3,12 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 
-from app.db.base import BaseModel
-from app.models.mixins import SoftDeleteMixin
-from sqlalchemy import (
-    Boolean,
-    DateTime,
-    ForeignKey,
-    Index,
-    Integer,
-    UniqueConstraint,
-)
+from sqlalchemy import Boolean, DateTime, ForeignKey, Index, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
+
+from app.db.base import BaseModel
+from app.models.mixins import SoftDeleteMixin
 
 if TYPE_CHECKING:
     from app.models import File, Job

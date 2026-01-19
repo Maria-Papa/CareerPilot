@@ -1,8 +1,9 @@
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 from app.api.v1 import router
 from app.core.error_handlers import register_error_handlers
 from app.db import Base, engine
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 
 # Create all database tables (for SQLite dev mode)
 Base.metadata.create_all(bind=engine)

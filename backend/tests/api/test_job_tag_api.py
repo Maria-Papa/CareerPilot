@@ -6,7 +6,7 @@ from app.models.job import Job
 from app.models.tag import Tag
 from app.models.user import User
 from fastapi.testclient import TestClient
-from tests.utils.api_assertions import assert_404, assert_list, assert_status
+from tests.utils.api_assertions import assert_status
 
 pytestmark = pytest.mark.integration
 

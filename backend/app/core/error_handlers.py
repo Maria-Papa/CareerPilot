@@ -1,18 +1,8 @@
-from app.core.errors import (
-    AccessDeniedError,
-    ConflictError,
-    DomainError,
-    EntityNotFoundError,
-    ValidationError,
-)
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from starlette.status import (
-    HTTP_400_BAD_REQUEST,
-    HTTP_403_FORBIDDEN,
-    HTTP_404_NOT_FOUND,
-    HTTP_409_CONFLICT,
-)
+from starlette.status import HTTP_400_BAD_REQUEST, HTTP_403_FORBIDDEN, HTTP_404_NOT_FOUND, HTTP_409_CONFLICT
+
+from app.core.errors import AccessDeniedError, ConflictError, DomainError, EntityNotFoundError, ValidationError
 
 
 def _error_detail(exc: Exception) -> str:

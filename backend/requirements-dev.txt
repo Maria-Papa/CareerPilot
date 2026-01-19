@@ -1,4 +1,20 @@
+# formatting / linting / typing
+black==24.3.0
+ruff==0.14.13
+mypy==1.8.0
+types-setuptools==80.9.0.20251223
+
+# testing / coverage / security
 pytest==9.0.2
+pytest-cov==7.0.0
+coverage==7.13.1
+bandit==1.7.7
+pip-audit==2.0.0
+
+# git hooks / tooling
+pre-commit==4.5.1
+
+# small extras you already had
 pluggy==1.6.0
 iniconfig==2.3.0
 Pygments==2.19.2

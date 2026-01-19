@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from typing import Callable
 
 import pytest
@@ -7,7 +6,6 @@ from app.models.company import Company
 from app.models.job import Job
 from app.models.user import User
 from fastapi.testclient import TestClient
-from sqlalchemy.orm import Session
 from tests.utils.api_assertions import assert_404, assert_list, assert_status
 
 pytestmark = pytest.mark.integration

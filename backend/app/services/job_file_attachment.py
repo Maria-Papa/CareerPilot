@@ -1,12 +1,13 @@
 from datetime import datetime, timezone
 from typing import cast
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError
 from app.models.job_file_attachment import JobFileAttachment
 from app.repositories import JobFileAttachmentRepository, JobRepository
 from app.schemas import JobFileAttachmentCreate, JobFileAttachmentUpdate
 from app.services.soft_delete_base import SoftDeleteService
-from sqlalchemy.orm import Session
 
 
 class JobFileAttachmentService(SoftDeleteService[JobFileAttachment]):
@@ -27,9 +28,7 @@ class JobFileAttachmentService(SoftDeleteService[JobFileAttachment]):
         if self._job_repo.get(session, job_id) is None:
             raise EntityNotFoundError("Job not found")
 
-    def create_attachment(
-        self, session: Session, job_id: int, data: JobFileAttachmentCreate
-    ) -> JobFileAttachment:
+    def create_attachment(self, session: Session, job_id: int, data: JobFileAttachmentCreate) -> JobFileAttachment:
         self._validate_job(session, job_id)
         values = data.model_dump()
         values["job_id"] = job_id
@@ -49,9 +48,7 @@ class JobFileAttachmentService(SoftDeleteService[JobFileAttachment]):
 
         return self.update(session, attachment, values)
 
-    def detach_attachment(
-        self, session: Session, attachment: JobFileAttachment
-    ) -> JobFileAttachment:
+    def detach_attachment(self, session: Session, attachment: JobFileAttachment) -> JobFileAttachment:
         values = {
             "detached_at": datetime.now(timezone.utc),
             "is_active": False,

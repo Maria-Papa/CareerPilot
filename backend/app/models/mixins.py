@@ -1,8 +1,9 @@
 from datetime import datetime
+
 from sqlalchemy import DateTime
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
-from sqlalchemy.ext.hybrid import hybrid_property
 
 
 class TimestampMixin:

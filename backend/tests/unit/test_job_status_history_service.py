@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from unittest.mock import MagicMock
 
 import pytest
@@ -7,10 +6,7 @@ from app.enums.job_status import JobStatus
 from app.models.job_status_history import JobStatusHistory
 from app.repositories.job import JobRepository
 from app.repositories.job_status_history import JobStatusHistoryRepository
-from app.schemas.job_status_history import (
-    JobStatusHistoryCreate,
-    JobStatusHistoryUpdate,
-)
+from app.schemas.job_status_history import JobStatusHistoryCreate, JobStatusHistoryUpdate
 from app.services.job_status_history import JobStatusHistoryService
 from sqlalchemy.orm import Session
 
@@ -35,9 +31,7 @@ def service(repo_mock: MagicMock, job_repo_mock: MagicMock) -> JobStatusHistoryS
     return svc
 
 
-def test_create_history_valid_job(
-    service: JobStatusHistoryService, repo_mock: MagicMock, job_repo_mock: MagicMock
-):
+def test_create_history_valid_job(service: JobStatusHistoryService, repo_mock: MagicMock, job_repo_mock: MagicMock):
     session = MagicMock(spec=Session)
     job_repo_mock.get.return_value = object()
 
@@ -52,9 +46,7 @@ def test_create_history_valid_job(
     assert result is history
 
 
-def test_create_history_invalid_job_raises(
-    service: JobStatusHistoryService, job_repo_mock: MagicMock
-):
+def test_create_history_invalid_job_raises(service: JobStatusHistoryService, job_repo_mock: MagicMock):
     session = MagicMock(spec=Session)
     job_repo_mock.get.return_value = None
 

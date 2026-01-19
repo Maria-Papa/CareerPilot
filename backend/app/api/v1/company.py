@@ -1,10 +1,11 @@
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models.company import Company
 from app.schemas.company import CompanyCreate, CompanyRead, CompanyUpdate
 from app.services.company import CompanyService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/companies", tags=["companies"])
 
@@ -14,9 +15,7 @@ get_active_company_or_404 = get_entity_or_404(service.get_company)
 
 
 @router.get("", response_model=list[CompanyRead])
-def list_companies(
-    offset: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
+def list_companies(offset: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return service.list_companies(session, offset=offset, limit=limit)
 
 

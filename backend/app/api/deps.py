@@ -1,12 +1,13 @@
 from typing import Callable, TypeVar
 
+from fastapi import Depends, HTTPException, Request, status
+from fastapi.security import OAuth2PasswordBearer
+from sqlalchemy.orm import Session
+
 from app.core.error_handlers import EntityNotFoundError
 from app.db.session import get_session
 from app.models.user import User
 from app.repositories.user import UserRepository
-from fastapi import Depends, HTTPException, Request, status
-from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.orm import Session
 
 T = TypeVar("T")
 

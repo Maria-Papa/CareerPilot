@@ -10,9 +10,7 @@ from tests.utils.api_assertions import assert_404, assert_list, assert_status
 pytestmark = pytest.mark.integration
 
 
-def test_create_and_get_cost(
-    client: TestClient, location_factory: Callable[..., Location]
-) -> None:
+def test_create_and_get_cost(client: TestClient, location_factory: Callable[..., Location]) -> None:
     location = location_factory()
 
     payload = {

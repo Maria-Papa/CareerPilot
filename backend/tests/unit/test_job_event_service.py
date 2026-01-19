@@ -27,9 +27,7 @@ def service(repo_mock: MagicMock, job_repo_mock: MagicMock) -> JobEventService:
     return JobEventService(repository=repo_mock, job_repo=job_repo_mock)
 
 
-def test_create_job_event_success(
-    service: JobEventService, repo_mock: MagicMock, job_repo_mock: MagicMock
-) -> None:
+def test_create_job_event_success(service: JobEventService, repo_mock: MagicMock, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     job_repo_mock.get.return_value = object()
     data = JobEventCreate(
@@ -49,9 +47,7 @@ def test_create_job_event_success(
     assert result is event
 
 
-def test_create_job_event_job_not_found(
-    service: JobEventService, job_repo_mock: MagicMock
-) -> None:
+def test_create_job_event_job_not_found(service: JobEventService, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     job_repo_mock.get.return_value = None
 
@@ -64,9 +60,7 @@ def test_create_job_event_job_not_found(
         service.create_for_job(session, 999, data)
 
 
-def test_update_job_event_valid(
-    service: JobEventService, repo_mock: MagicMock, job_repo_mock: MagicMock
-) -> None:
+def test_update_job_event_valid(service: JobEventService, repo_mock: MagicMock, job_repo_mock: MagicMock) -> None:
     session = MagicMock()
     event = JobEvent(
         id=1,
@@ -103,9 +97,7 @@ def test_get_job_event_success(service: JobEventService, repo_mock: MagicMock) -
     assert result is event
 
 
-def test_get_job_event_not_found(
-    service: JobEventService, repo_mock: MagicMock
-) -> None:
+def test_get_job_event_not_found(service: JobEventService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     repo_mock.get.return_value = None
 
@@ -113,9 +105,7 @@ def test_get_job_event_not_found(
         service.get_job_event(session, 999)
 
 
-def test_list_job_events_for_job(
-    service: JobEventService, repo_mock: MagicMock
-) -> None:
+def test_list_job_events_for_job(service: JobEventService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     repo_mock.find.return_value = [
         JobEvent(

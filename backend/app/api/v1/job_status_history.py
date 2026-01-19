@@ -1,16 +1,13 @@
 from typing import Sequence
 
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db.session import get_session
 from app.models.job_status_history import JobStatusHistory
-from app.schemas.job_status_history import (
-    JobStatusHistoryCreate,
-    JobStatusHistoryRead,
-    JobStatusHistoryUpdate,
-)
+from app.schemas.job_status_history import JobStatusHistoryCreate, JobStatusHistoryRead, JobStatusHistoryUpdate
 from app.services.job_status_history import JobStatusHistoryService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(
     prefix="/jobs/{job_id}/status-history",

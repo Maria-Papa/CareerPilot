@@ -1,0 +1,97 @@
+default_install_hook_types: [pre-commit, pre-push]
+minimum_pre_commit_version: '3.5.0'
+
+# Enable caching for speed
+ci:
+  autofix_prs: false
+  autoupdate_schedule: quarterly
+
+repos:
+  # -----------------------------
+  # Black (Python formatter)
+  # -----------------------------
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3.11
+        exclude: |
+          (^\.venv/|^__pycache__/|^\.pytest_cache/|^htmlcov/)
+
+  # -----------------------------
+  # Ruff (replaces flake8 + isort)
+  # -----------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.0
+    hooks:
+      - id: ruff
+        args: ['--fix']
+        exclude: |
+          (^\.venv/|^__pycache__/|^\.pytest_cache/|^htmlcov/)
+      - id: ruff-format
+        exclude: |
+          (^\.venv/|^__pycache__/|^\.pytest_cache/|^htmlcov/)
+
+  # -----------------------------
+  # Mypy (type checking)
+  # -----------------------------
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - sqlalchemy
+          - pydantic
+        exclude: |
+          (^\.venv/|^__pycache__/|^\.pytest_cache/|^htmlcov/)
+
+  # -----------------------------
+  # Bandit (security scanning)
+  # -----------------------------
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.7
+    hooks:
+      - id: bandit
+        args:
+          - -r
+          - app
+          - --skip
+          - B101
+        pass_filenames: false
+        exclude: |
+          (^\.venv/|^__pycache__/|^\.pytest_cache/|^htmlcov/)
+
+  # -----------------------------
+  # Check for large files
+  # -----------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+
+  # -----------------------------
+  # Local pre-push: fast checks on changed files only
+  # -----------------------------
+  - repo: local
+    hooks:
+      - id: pre-push-fast-checks
+        name: Fast checks before push (changed files only)
+        entry: |
+          bash -c '
+            CHANGED=$(git diff --cached --name-only --diff-filter=ACMRT | grep -E "\.py$" || true);
+            if [ -z "$CHANGED" ]; then
+              echo "No changed Python files to check.";
+              exit 0;
+            fi
+            echo "Running fast checks on changed files:";
+            echo "$CHANGED";
+            ruff check $CHANGED || exit 1;
+            black --check $CHANGED || exit 1;
+            if echo "$CHANGED" | grep -q "^app/"; then
+              mypy app || exit 1;
+            fi
+            pytest -m "not integration" -q || exit 1;
+          '
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

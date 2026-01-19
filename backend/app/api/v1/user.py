@@ -1,12 +1,13 @@
 from typing import List
 
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models import User
 from app.schemas import UserCreate, UserRead, UserUpdate
 from app.services.user import UserService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -16,9 +17,7 @@ get_active_user_or_404 = get_entity_or_404(service.get_including_deleted)
 
 
 @router.get("", response_model=List[UserRead])
-def list_users(
-    offset: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
+def list_users(offset: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return service.list(session, offset=offset, limit=limit)
 
 

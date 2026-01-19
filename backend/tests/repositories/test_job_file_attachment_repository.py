@@ -15,9 +15,7 @@ def repo() -> JobFileAttachmentRepository:
     return JobFileAttachmentRepository()
 
 
-def test_add_and_get_job_file_attachment(
-    repo: JobFileAttachmentRepository, db_session: Session
-) -> None:
+def test_add_and_get_job_file_attachment(repo: JobFileAttachmentRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -34,9 +32,7 @@ def test_add_and_get_job_file_attachment(
     assert fetched.id == attachment.id
 
 
-def test_get_all_and_find_job_file_attachment(
-    repo: JobFileAttachmentRepository, db_session: Session
-) -> None:
+def test_get_all_and_find_job_file_attachment(repo: JobFileAttachmentRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -53,9 +49,7 @@ def test_get_all_and_find_job_file_attachment(
     assert any(a.job_id == job.id for a in found)
 
 
-def test_update_job_file_attachment(
-    repo: JobFileAttachmentRepository, db_session: Session
-) -> None:
+def test_update_job_file_attachment(repo: JobFileAttachmentRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -71,9 +65,7 @@ def test_update_job_file_attachment(
     assert updated.is_active is False
 
 
-def test_soft_delete_and_restore_job_file_attachment(
-    repo: JobFileAttachmentRepository, db_session: Session
-) -> None:
+def test_soft_delete_and_restore_job_file_attachment(repo: JobFileAttachmentRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -96,9 +88,7 @@ def test_soft_delete_and_restore_job_file_attachment(
     assert repo.get(db_session, attachment.id) is not None
 
 
-def test_delete_permanent_job_file_attachment(
-    repo: JobFileAttachmentRepository, db_session: Session
-) -> None:
+def test_delete_permanent_job_file_attachment(repo: JobFileAttachmentRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)

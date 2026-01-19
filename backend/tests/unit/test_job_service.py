@@ -5,14 +5,12 @@ from app.core.errors import EntityNotFoundError, InvalidStateTransitionError
 from app.enums.job_status import JobStatus
 from app.models.job import Job
 from app.models.job_file_attachment import JobFileAttachment
-from app.models.job_status_history import JobStatusHistory
 from app.repositories.company import CompanyRepository
 from app.repositories.job import JobRepository
 from app.repositories.location import LocationRepository
 from app.repositories.user import UserRepository
 from app.schemas.job import JobCreate, JobUpdate
 from app.services.job import JobService
-from requests import session
 
 pytestmark = pytest.mark.unit
 
@@ -72,18 +70,14 @@ def test_create_job_success(
         current_status=JobStatus.APPLIED,
     )
 
-    job = Job(
-        id=1, user_id=1, company_id=1, title="Test", current_status=JobStatus.APPLIED
-    )
+    job = Job(id=1, user_id=1, company_id=1, title="Test", current_status=JobStatus.APPLIED)
     repo_mock.add.return_value = job
 
     result = service.create_job(session, data, user_id=1)
     assert result is job
 
 
-def test_create_job_user_not_found(
-    service: JobService, user_repo_mock: MagicMock
-) -> None:
+def test_create_job_user_not_found(service: JobService, user_repo_mock: MagicMock) -> None:
     session = MagicMock()
     user_repo_mock.get.return_value = None
 
@@ -107,18 +101,14 @@ def test_update_job(
     location_repo_mock: MagicMock,
 ) -> None:
     session = MagicMock()
-    job = Job(
-        id=1, user_id=1, company_id=1, title="Old", current_status=JobStatus.APPLIED
-    )
+    job = Job(id=1, user_id=1, company_id=1, title="Old", current_status=JobStatus.APPLIED)
 
     user_repo_mock.get.return_value = True
     company_repo_mock.get.return_value = True
     location_repo_mock.get.return_value = True
 
     data = JobUpdate(title="New")
-    updated = Job(
-        id=1, user_id=1, company_id=1, title="New", current_status=JobStatus.APPLIED
-    )
+    updated = Job(id=1, user_id=1, company_id=1, title="New", current_status=JobStatus.APPLIED)
     repo_mock.update.return_value = updated
 
     result = service.update_job(session, job, data)

@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from sqlalchemy import JSON, Enum, ForeignKey, Index
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.base import BaseModel
 from app.enums.job_event_type import JobEventType
 from app.models.mixins import TimestampMixin
-from sqlalchemy import JSON, Enum, ForeignKey, Index
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 if TYPE_CHECKING:
     from app.models import Job
@@ -20,9 +21,7 @@ class JobEvent(BaseModel, TimestampMixin):
     )
 
     id: Mapped[int] = mapped_column(primary_key=True)
-    job_id: Mapped[int] = mapped_column(
-        ForeignKey("jobs.id", ondelete="CASCADE"), index=True
-    )
+    job_id: Mapped[int] = mapped_column(ForeignKey("jobs.id", ondelete="CASCADE"), index=True)
     event_type: Mapped[JobEventType] = mapped_column(
         Enum(
             JobEventType,

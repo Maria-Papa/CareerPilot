@@ -21,7 +21,7 @@ def test_add_and_get_job_tag(repo: JobTagRepository, db_session: Session):
     job = create_job(db_session, user_id=user.id, company_id=company.id)
     tag = create_tag(db_session)
 
-    link = create_job_tag(db_session, job_id=job.id, tag_id=tag.id)
+    create_job_tag(db_session, job_id=job.id, tag_id=tag.id)
 
     fetched = repo.find_one(db_session, job_id=job.id, tag_id=tag.id)
     assert fetched is not None

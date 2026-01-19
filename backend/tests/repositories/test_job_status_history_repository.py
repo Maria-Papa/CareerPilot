@@ -15,9 +15,7 @@ def repo() -> JobStatusHistoryRepository:
     return JobStatusHistoryRepository()
 
 
-def test_add_and_get_job_status_history(
-    repo: JobStatusHistoryRepository, db_session: Session
-) -> None:
+def test_add_and_get_job_status_history(repo: JobStatusHistoryRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -29,17 +27,13 @@ def test_add_and_get_job_status_history(
     assert fetched.id == history.id
 
 
-def test_get_all_and_find_job_status_history(
-    repo: JobStatusHistoryRepository, db_session: Session
-) -> None:
+def test_get_all_and_find_job_status_history(repo: JobStatusHistoryRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
 
     h1 = create_job_status_history(db_session, job_id=job.id, status=JobStatus.APPLIED)
-    h2 = create_job_status_history(
-        db_session, job_id=job.id, status=JobStatus.INTERVIEW
-    )
+    h2 = create_job_status_history(db_session, job_id=job.id, status=JobStatus.INTERVIEW)
 
     all_history = repo.get_all(db_session)
     assert any(h.id == h1.id for h in all_history)
@@ -49,9 +43,7 @@ def test_get_all_and_find_job_status_history(
     assert all(h.job_id == job.id for h in found)
 
 
-def test_update_job_status_history(
-    repo: JobStatusHistoryRepository, db_session: Session
-) -> None:
+def test_update_job_status_history(repo: JobStatusHistoryRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)
@@ -62,9 +54,7 @@ def test_update_job_status_history(
     assert updated.status == JobStatus.INTERVIEW
 
 
-def test_delete_job_status_history(
-    repo: JobStatusHistoryRepository, db_session: Session
-) -> None:
+def test_delete_job_status_history(repo: JobStatusHistoryRepository, db_session: Session) -> None:
     user = create_user(db_session)
     company = create_company(db_session)
     job = create_job(db_session, user_id=user.id, company_id=company.id)

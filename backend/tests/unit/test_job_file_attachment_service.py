@@ -4,10 +4,7 @@ from unittest.mock import ANY, MagicMock
 import pytest
 from app.models.job_file_attachment import JobFileAttachment
 from app.repositories.job_file_attachment import JobFileAttachmentRepository
-from app.schemas.job_file_attachment import (
-    JobFileAttachmentCreate,
-    JobFileAttachmentUpdate,
-)
+from app.schemas.job_file_attachment import JobFileAttachmentCreate, JobFileAttachmentUpdate
 from app.services.job_file_attachment import JobFileAttachmentService
 
 pytestmark = pytest.mark.unit
@@ -25,9 +22,7 @@ def service(repo_mock: MagicMock) -> JobFileAttachmentService:
     return svc
 
 
-def test_create_attachment(
-    service: JobFileAttachmentService, repo_mock: MagicMock
-) -> None:
+def test_create_attachment(service: JobFileAttachmentService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     data = JobFileAttachmentCreate(
         file_id=2,
@@ -44,9 +39,7 @@ def test_create_attachment(
     assert result is created
 
 
-def test_update_attachment(
-    service: JobFileAttachmentService, repo_mock: MagicMock
-) -> None:
+def test_update_attachment(service: JobFileAttachmentService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     attachment = JobFileAttachment(id=1, job_id=1, file_id=2, version=1)
 
@@ -64,9 +57,7 @@ def test_update_attachment(
     assert result is updated
 
 
-def test_detach_attachment(
-    service: JobFileAttachmentService, repo_mock: MagicMock
-) -> None:
+def test_detach_attachment(service: JobFileAttachmentService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     attachment = JobFileAttachment(
         id=1,

@@ -1,13 +1,14 @@
 from datetime import datetime
 from typing import cast
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError
 from app.models.interview import Interview
 from app.repositories.interview import InterviewRepository
 from app.repositories.job import JobRepository
 from app.schemas.interview import InterviewCreate, InterviewUpdate
 from app.services.base import BaseService
-from sqlalchemy.orm import Session
 
 
 class InterviewService(BaseService[Interview]):
@@ -28,9 +29,7 @@ class InterviewService(BaseService[Interview]):
         if self._job_repo.get(session, job_id) is None:
             raise EntityNotFoundError("Job not found")
 
-    def create_interview(
-        self, session: Session, job_id: int, data: InterviewCreate
-    ) -> Interview:
+    def create_interview(self, session: Session, job_id: int, data: InterviewCreate) -> Interview:
         self._validate_job(session, job_id)
         interview = Interview(job_id=job_id, **data.model_dump())
         return self.create(session, interview)

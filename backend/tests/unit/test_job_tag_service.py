@@ -29,9 +29,7 @@ def tag_repo_mock() -> MagicMock:
 
 
 @pytest.fixture
-def service(
-    repo_mock: MagicMock, job_repo_mock: MagicMock, tag_repo_mock: MagicMock
-) -> JobTagService:
+def service(repo_mock: MagicMock, job_repo_mock: MagicMock, tag_repo_mock: MagicMock) -> JobTagService:
     svc = JobTagService()
     svc.repository = repo_mock
     svc._job_repo = job_repo_mock
@@ -61,9 +59,7 @@ def test_create_tag_valid(
     assert result is link
 
 
-def test_create_tag_invalid_job(
-    service: JobTagService, job_repo_mock: MagicMock
-) -> None:
+def test_create_tag_invalid_job(service: JobTagService, job_repo_mock: MagicMock) -> None:
     session = MagicMock(spec=Session)
     job_repo_mock.get.return_value = None
 
@@ -71,9 +67,7 @@ def test_create_tag_invalid_job(
         service.create_tag(session, 1, JobTagCreate(tag_id=5))
 
 
-def test_create_tag_invalid_tag(
-    service: JobTagService, job_repo_mock: MagicMock, tag_repo_mock: MagicMock
-) -> None:
+def test_create_tag_invalid_tag(service: JobTagService, job_repo_mock: MagicMock, tag_repo_mock: MagicMock) -> None:
     session = MagicMock(spec=Session)
     job_repo_mock.get.return_value = object()
     tag_repo_mock.get.return_value = None

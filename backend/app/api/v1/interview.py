@@ -1,13 +1,14 @@
 from datetime import datetime
 from typing import Sequence
 
+from fastapi import APIRouter, Depends, Query, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models.interview import Interview
 from app.schemas.interview import InterviewCreate, InterviewRead, InterviewUpdate
 from app.services.interview import InterviewService
-from fastapi import APIRouter, Depends, Query, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/jobs/{job_id}/interviews", tags=["interviews"])
 

@@ -1,10 +1,13 @@
 from __future__ import annotations
+
 from typing import TYPE_CHECKING
+
 from sqlalchemy import Index, String
-from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.associationproxy import association_proxy
-from app.models.mixins import TimestampMixin
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.db.base import BaseModel
+from app.models.mixins import TimestampMixin
 
 if TYPE_CHECKING:
     from app.models import JobTag

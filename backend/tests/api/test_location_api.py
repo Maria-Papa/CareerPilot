@@ -27,9 +27,7 @@ def test_create_and_get_location(client: TestClient, db_session: Session) -> Non
     assert resp.json()["id"] == loc_id
 
 
-def test_list_locations(
-    client: TestClient, db_session: Session, location_factory: Callable[..., Location]
-) -> None:
+def test_list_locations(client: TestClient, db_session: Session, location_factory: Callable[..., Location]) -> None:
     location_factory(name="Thessaloniki")
     location_factory(name="Stockholm")
 
@@ -38,9 +36,7 @@ def test_list_locations(
     assert_list(resp)
 
 
-def test_update_location(
-    client: TestClient, db_session: Session, location_factory: Callable[..., Location]
-) -> None:
+def test_update_location(client: TestClient, db_session: Session, location_factory: Callable[..., Location]) -> None:
     loc = location_factory(name="OldName")
     payload = {"name": "NewName"}
 
@@ -52,9 +48,7 @@ def test_update_location(
     assert loc.name == "NewName"
 
 
-def test_delete_location(
-    client: TestClient, db_session: Session, location_factory: Callable[..., Location]
-) -> None:
+def test_delete_location(client: TestClient, db_session: Session, location_factory: Callable[..., Location]) -> None:
     loc = location_factory()
 
     resp = client.delete(f"/api/v1/locations/{loc.id}")

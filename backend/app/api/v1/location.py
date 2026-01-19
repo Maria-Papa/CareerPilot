@@ -1,10 +1,11 @@
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db import get_session
 from app.models import Location
 from app.schemas import LocationCreate, LocationRead, LocationUpdate
 from app.services import LocationService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/locations", tags=["locations"])
 
@@ -13,9 +14,7 @@ get_location_or_404 = get_entity_or_404(service.repository.get)
 
 
 @router.get("", response_model=list[LocationRead])
-def list_locations(
-    offset: int = 0, limit: int = 100, session: Session = Depends(get_session)
-):
+def list_locations(offset: int = 0, limit: int = 100, session: Session = Depends(get_session)):
     return service.list_locations(session, offset=offset, limit=limit)
 
 

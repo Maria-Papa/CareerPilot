@@ -1,11 +1,12 @@
 from typing import Optional, Sequence
 
+from sqlalchemy.orm import Session
+
 from app.core.error_handlers import EntityNotFoundError
 from app.models.tag import Tag
 from app.repositories.tag import TagRepository
 from app.schemas.tag import TagCreate, TagUpdate
 from app.services.base import BaseService
-from sqlalchemy.orm import Session
 
 
 class TagService(BaseService[Tag]):
@@ -13,9 +14,7 @@ class TagService(BaseService[Tag]):
         repository = repository or TagRepository()
         super().__init__(repository)
 
-    def list_tags(
-        self, session: Session, *, offset: int = 0, limit: int = 100
-    ) -> Sequence[Tag]:
+    def list_tags(self, session: Session, *, offset: int = 0, limit: int = 100) -> Sequence[Tag]:
         return self.list(session, offset=offset, limit=limit)
 
     def get_tag(self, session: Session, id: int) -> Tag:

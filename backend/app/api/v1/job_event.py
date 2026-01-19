@@ -1,12 +1,13 @@
 from typing import Sequence
 
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db.session import get_session
 from app.models.job_event import JobEvent
 from app.schemas.job_event import JobEventCreate, JobEventRead, JobEventUpdate
 from app.services.job_event import JobEventService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/jobs/{job_id}/job-events", tags=["job-events"])
 

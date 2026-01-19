@@ -1,6 +1,8 @@
 from datetime import datetime, timezone
 from typing import cast
 
+from sqlalchemy.orm import Session
+
 from app.core.errors import EntityNotFoundError, InvalidStateTransitionError
 from app.enums.job_status import JobStatus
 from app.models.job import Job
@@ -12,7 +14,6 @@ from app.repositories.location import LocationRepository
 from app.repositories.user import UserRepository
 from app.schemas.job import JobCreate, JobUpdate
 from app.services.soft_delete_base import SoftDeleteService
-from sqlalchemy.orm import Session
 
 
 class JobService(SoftDeleteService[Job]):
@@ -41,10 +42,7 @@ class JobService(SoftDeleteService[Job]):
             raise EntityNotFoundError("Company not found")
 
     def _validate_location(self, session: Session, location_id: int | None) -> None:
-        if (
-            location_id is not None
-            and self.location_repo.get(session, location_id) is None
-        ):
+        if location_id is not None and self.location_repo.get(session, location_id) is None:
             raise EntityNotFoundError("Location not found")
 
     def get_for_user(self, session: Session, job_id: int, user_id: int) -> Job:
@@ -53,17 +51,13 @@ class JobService(SoftDeleteService[Job]):
             raise EntityNotFoundError("Job not found or not owned by user")
         return job
 
-    def get_including_deleted_for_user(
-        self, session: Session, job_id: int, user_id: int
-    ) -> Job:
+    def get_including_deleted_for_user(self, session: Session, job_id: int, user_id: int) -> Job:
         job = self.job_repo.get_including_deleted(session, job_id)
         if job is None or job.user_id != user_id:
             raise EntityNotFoundError("Job not found or not owned by user")
         return job
 
-    def list_for_user(
-        self, session: Session, user_id: int, *, offset: int = 0, limit: int = 100
-    ):
+    def list_for_user(self, session: Session, user_id: int, *, offset: int = 0, limit: int = 100):
         return self.job_repo.list_for_user(session, user_id, offset=offset, limit=limit)
 
     def create_job(self, session: Session, data: JobCreate, user_id: int) -> Job:

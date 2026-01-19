@@ -1,21 +1,10 @@
 from typing import cast
 
 import pytest
-from app.core.errors import (
-    AccessDeniedError,
-    ConflictError,
-    DomainError,
-    EntityNotFoundError,
-    ValidationError,
-)
+from app.core.errors import AccessDeniedError, ConflictError, DomainError, EntityNotFoundError, ValidationError
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from tests.utils.api_assertions import (
-    assert_400,
-    assert_403,
-    assert_404,
-    assert_status,
-)
+from tests.utils.api_assertions import assert_400, assert_403, assert_404, assert_status
 
 pytestmark = pytest.mark.integration
 

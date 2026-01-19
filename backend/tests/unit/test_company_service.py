@@ -22,9 +22,7 @@ def service(repo_mock: MagicMock) -> CompanyService:
     return CompanyService(repository=repo_mock)
 
 
-def test_list_companies_calls_get_all(
-    service: CompanyService, repo_mock: MagicMock
-) -> None:
+def test_list_companies_calls_get_all(service: CompanyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     repo_mock.get_all.return_value = [Company(name="S1"), Company(name="S2")]
 
@@ -44,9 +42,7 @@ def test_get_company_success(service: CompanyService, repo_mock: MagicMock) -> N
     assert result is company
 
 
-def test_get_company_not_found_raises(
-    service: CompanyService, repo_mock: MagicMock
-) -> None:
+def test_get_company_not_found_raises(service: CompanyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     repo_mock.get.return_value = None
 
@@ -54,9 +50,7 @@ def test_get_company_not_found_raises(
         service.get_company(session, 999)
 
 
-def test_get_company_including_deleted_success(
-    service: CompanyService, repo_mock: MagicMock
-) -> None:
+def test_get_company_including_deleted_success(service: CompanyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     company = Company(id=2, name="Deleted")
     repo_mock.get_including_deleted.return_value = company
@@ -90,9 +84,7 @@ def test_update_company(service: CompanyService, repo_mock: MagicMock) -> None:
     assert result.name == "NewName"
 
 
-def test_delete_uses_soft_delete_for_soft_repo(
-    service: CompanyService, repo_mock: MagicMock
-) -> None:
+def test_delete_uses_soft_delete_for_soft_repo(service: CompanyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     company = Company(id=4, name="ToDelete")
 
@@ -103,9 +95,7 @@ def test_delete_uses_soft_delete_for_soft_repo(
     repo_mock.soft_delete.assert_called_once_with(session, company)
 
 
-def test_restore_calls_repository_restore(
-    service: CompanyService, repo_mock: MagicMock
-) -> None:
+def test_restore_calls_repository_restore(service: CompanyService, repo_mock: MagicMock) -> None:
     session = MagicMock()
     company = Company(id=5, name="ToRestore")
 

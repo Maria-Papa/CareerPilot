@@ -1,12 +1,13 @@
 from typing import Sequence
 
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_session
 from app.core.errors import EntityNotFoundError
 from app.models.job_tag import JobTag
 from app.schemas.job_tag import JobTagCreate, JobTagRead, JobTagUpdate
 from app.services.job_tag import JobTagService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(
     prefix="/jobs/{job_id}/tags",

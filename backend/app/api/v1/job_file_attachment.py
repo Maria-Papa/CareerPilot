@@ -1,16 +1,13 @@
 from typing import Sequence
 
+from fastapi import APIRouter, Depends, status
+from sqlalchemy.orm import Session
+
 from app.api.deps import get_entity_or_404
 from app.db.session import get_session
 from app.models.job_file_attachment import JobFileAttachment
-from app.schemas.job_file_attachment import (
-    JobFileAttachmentCreate,
-    JobFileAttachmentRead,
-    JobFileAttachmentUpdate,
-)
+from app.schemas.job_file_attachment import JobFileAttachmentCreate, JobFileAttachmentRead, JobFileAttachmentUpdate
 from app.services.job_file_attachment import JobFileAttachmentService
-from fastapi import APIRouter, Depends, status
-from sqlalchemy.orm import Session
 
 router = APIRouter(
     prefix="/jobs/{job_id}/file-attachments",
@@ -38,9 +35,7 @@ def get_job_file_attachment(
     return attachment
 
 
-@router.post(
-    "", response_model=JobFileAttachmentRead, status_code=status.HTTP_201_CREATED
-)
+@router.post("", response_model=JobFileAttachmentRead, status_code=status.HTTP_201_CREATED)
 def create_job_file_attachment(
     job_id: int,
     data: JobFileAttachmentCreate,

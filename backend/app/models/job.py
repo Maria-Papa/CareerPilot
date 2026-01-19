@@ -2,31 +2,16 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from app.db.base import BaseModel
-from app.enums import EmploymentType, FlexibilityType, JobStatus
-from app.models.mixins import SoftDeleteMixin, TimestampMixin
-from sqlalchemy import (
-    Enum,
-    ForeignKey,
-    Index,
-    Integer,
-    String,
-    Text,
-)
+from sqlalchemy import Enum, ForeignKey, Index, Integer, String, Text
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+from app.db.base import BaseModel
+from app.enums import EmploymentType, FlexibilityType, JobStatus
+from app.models.mixins import SoftDeleteMixin, TimestampMixin
+
 if TYPE_CHECKING:
-    from app.models import (
-        Company,
-        Interview,
-        JobEvent,
-        JobFileAttachment,
-        JobStatusHistory,
-        JobTag,
-        Location,
-        User,
-    )
+    from app.models import Company, Interview, JobEvent, JobFileAttachment, JobStatusHistory, JobTag, Location, User
 
 
 class Job(BaseModel, TimestampMixin, SoftDeleteMixin):
@@ -72,9 +57,7 @@ class Job(BaseModel, TimestampMixin, SoftDeleteMixin):
     salary_net: Mapped[int | None] = mapped_column(Integer)
 
     current_status: Mapped[JobStatus] = mapped_column(
-        Enum(
-            JobStatus, name="job_status_enum", native_enum=False, validate_strings=True
-        ),
+        Enum(JobStatus, name="job_status_enum", native_enum=False, validate_strings=True),
         nullable=False,
     )
 
