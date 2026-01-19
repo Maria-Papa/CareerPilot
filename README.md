@@ -146,8 +146,6 @@ Local ports:
 
 ## Pre‑commit Hooks
 
-## Roadmap (High Level)
-
 This project uses **pre‑commit** to enforce formatting, linting, typing, and security checks.
 
 Install hooks (required once):
@@ -171,6 +169,8 @@ pre-commit autoupdate
 pre-commit clean
 pre-commit run --all-files
 ```
+
+## Roadmap (High Level)
 
 ### Version 1.0 – MVP
 
