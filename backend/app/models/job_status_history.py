@@ -32,4 +32,4 @@ class JobStatusHistory(BaseModel, TimestampMixin):
     job: Mapped["Job"] = relationship(back_populates="status_history")
 
     def __repr__(self) -> str:
-        return f"JobStatusHistory(id={self.id!r}, job_id={self.job_id!r}, " f"status={self.status!r})"
+        return f"JobStatusHistory(id={self.id!r}, job_id={self.job_id!r}, status={self.status!r})"
