@@ -25,7 +25,7 @@
         "ms-python.python",
         "ms-python.vscode-pylance",
         "ms-python.black-formatter",
-        "prettier.prettier-vscode",
+        "esbenp.prettier-vscode",
         "ms-vscode.vscode-typescript-next",
         "ms-playwright.playwright",
         "ms-azuretools.vscode-docker",
