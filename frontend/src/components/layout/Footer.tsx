@@ -5,7 +5,7 @@ export default function Footer() {
   return (
     <footer
       role="contentinfo"
-      className="w-full border-t border-[var(--sidebar-border)] bg-card h-[var(--footer-offset)] flex items-center"
+      className="w-full border-t border-[var(--surface-border)] bg-card h-[var(--footer-offset)] flex items-center"
     >
       <div className="w-full max-w-[2000px] mx-auto px-[var(--page-padding)] flex flex-col md:flex-row justify-between items-center gap-2">
         <div className="flex items-center gap-3">

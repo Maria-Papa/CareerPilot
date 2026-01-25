@@ -1,27 +1,33 @@
+import { AppCard } from '@/components/shared/AppCard';
 import { Button } from '@/components/ui/button';
+import {
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import Link from 'next/link';
 
 export default function HomePage() {
   return (
-    <div
-      role="main"
-      className="min-h-[calc(100vh - var(--header-offset) - var(--footer-offset))] flex items-center justify-center px-6"
-    >
-      <section className="w-full max-w-xl text-center space-y-10">
-        <header className="space-y-3">
-          <h1 className="text-4xl font-semibold tracking-tight">CareerPilot</h1>
-          <p className="text-base text-muted-foreground">
-            Your personal career system — structured, truthful, reusable.
-          </p>
-        </header>
+    <AppCard className="w-full max-w-2xl mx-auto">
+      <CardHeader className="text-center space-y-3">
+        <CardTitle className="text-4xl font-semibold tracking-tight">
+          CareerPilot
+        </CardTitle>
+        <CardDescription className="text-base">
+          Your personal career system — structured, truthful, reusable.
+        </CardDescription>
+      </CardHeader>
 
-        <p className="text-sm leading-relaxed text-muted-foreground">
+      <CardContent className="space-y-8 text-center">
+        <p className="text-sm text-muted-foreground leading-relaxed">
           CareerPilot helps you capture what you’ve actually done in your
           career, structure it once, and reuse it everywhere — CVs,
           applications, interviews, and decisions.
         </p>
 
-        <ul className="space-y-5 text-left">
+        <ul className="space-y-5 text-left mx-auto max-w-md">
           <li className="space-y-1">
             <p className="font-medium">Capture your real experience</p>
             <p className="text-sm text-muted-foreground">
@@ -58,7 +64,7 @@ export default function HomePage() {
             I already have career data
           </Link>
         </div>
-      </section>
-    </div>
+      </CardContent>
+    </AppCard>
   );
 }

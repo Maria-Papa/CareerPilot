@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function Sidebar() {
   return (
     <aside
-      className="sidebar h-full w-[280px] shrink-0 flex flex-col px-4 py-6 border-r border-[var(--sidebar-border)] bg-[var(--sidebar-bg)]"
+      className="sidebar h-full w-[280px] shrink-0 flex flex-col px-4 py-6 border-r border-[var(--surface-border)] bg-[var(--sidebar-bg)]"
       aria-label="Sidebar"
     >
       {/* Scrollable menu area */}

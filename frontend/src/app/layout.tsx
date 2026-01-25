@@ -1,12 +1,13 @@
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
+import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import { PageContainer } from '@/components/layout/PageContainer';
+import Sidebar from '@/components/layout/Sidebar';
 import { ReactQueryProvider } from '@/providers/ReactQueryProvider';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { cookies } from 'next/headers';
 import React from 'react';
-import './globals.css';
+import '../styles/globals.css';
 
 const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] });
 const geistMono = Geist_Mono({
@@ -44,9 +45,9 @@ export default async function RootLayout({
 
               <main
                 role="main"
-                className="flex-1 min-h-[calc(100vh_-_var(--header-offset)_-_var(--footer-offset))]"
+                className="flex-1 min-h-[calc(100vh-var(--header-offset)-var(--footer-offset))]"
               >
-                <div className="max-w-4xl mx-auto w-full">{children}</div>
+                <PageContainer>{children}</PageContainer>
               </main>
             </div>
 

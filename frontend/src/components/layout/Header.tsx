@@ -2,11 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import ThemeSwitcher from './ThemeSwitcher';
+import ThemeSwitcher from '../shared/ThemeSwitcher';
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-card/80 border-b border-[var(--sidebar-border)] h-[var(--header-offset)] flex items-center">
+    <header className="sticky top-0 z-40 backdrop-blur-md bg-card/80 border-b border-[var(--surface-border)] h-[var(--header-offset)] flex items-center">
       <div className="mx-auto w-full max-w-[2000px] flex items-center justify-between px-[var(--page-padding)]">
         {/* Left: Brand + Nav */}
         <div className="flex items-center gap-6">
@@ -86,7 +86,7 @@ export default function Header() {
           <ThemeSwitcher />
 
           <div className="flex items-center gap-3">
-            <div className="px-3 py-1 rounded-full border border-[var(--sidebar-border)] text-xs text-muted-foreground">
+            <div className="px-3 py-1 rounded-full border border-[var(--surface-border)] text-xs text-muted-foreground">
               Local · Open Source · Yours
             </div>
 

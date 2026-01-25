@@ -105,7 +105,7 @@ export default function ThemeSwitcher() {
         <Button
           ref={triggerRef}
           variant="ghost"
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--sidebar-border)] bg-card text-sm focus-visible:ring-0 focus-visible:outline-none hover:bg-transparent active:bg-transparent"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--surface-border)] bg-card text-sm focus-visible:ring-0 focus-visible:outline-none hover:bg-transparent active:bg-transparent"
           aria-label="Open theme switcher"
         >
           {swatch}
@@ -132,7 +132,7 @@ export default function ThemeSwitcher() {
       <DropdownMenuContent
         align="end"
         sideOffset={8}
-        className="min-w-[220px] p-2 rounded-md border border-[var(--sidebar-border)] bg-[var(--popover-bg)] shadow-lg backdrop-blur-md"
+        className="min-w-[220px] p-2 rounded-md border border-[var(--surface-border)] bg-[var(--popover-bg)] shadow-lg backdrop-blur-md"
       >
         {THEMES.map((t) => {
           const checked = theme === t.id;
@@ -158,7 +158,7 @@ export default function ThemeSwitcher() {
           );
         })}
 
-        <DropdownMenuSeparator className="my-2 border-[var(--sidebar-border)]" />
+        <DropdownMenuSeparator className="my-2 border-[var(--surface-border)]" />
 
         <div className="flex justify-between px-1">
           <Button
