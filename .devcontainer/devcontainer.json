@@ -6,10 +6,13 @@
     "context": ".."
   },
   "remoteUser": "vscode",
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "${localEnv:SSH_AUTH_SOCK}"
+  },
   "features": {
     "ghcr.io/devcontainers/features/common-utils:1": {
-      "configureZshAsDefaultShell": false,
-      "upgradePackages": false
+      "configureZshAsDefaultShell": true,
+      "upgradePackages": true
     },
     "ghcr.io/devcontainers/features/python:1": {
       "version": "3.11",
@@ -20,6 +23,9 @@
     },
     "ghcr.io/devcontainers/features/docker-in-docker:2.13.0": {}
   },
+  "mounts": [
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,readonly"
+  ],
   "forwardPorts": [3000, 8000],
   "updateRemoteUserUID": true,
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
